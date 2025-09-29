@@ -39,7 +39,7 @@ function App() {
         <button
           type="button"
           onClick={handleClick}
-          className="px-4 py-2 cursor-pointer rounded border-1 border-transparent bg-gray-100 hover:border-1 hover:border-purple-400 transition duration-200"
+          className="px-4 py-2 cursor-pointer rounded border-1 border-transparent bg-gray-100 hover:border-1 hover:border-purple-400 dark:bg-amber-400 transition duration-200"
         >
           {`Theme is ${theme}`}
         </button>
