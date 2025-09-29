@@ -4,12 +4,17 @@ import { promises } from 'node:fs';
 import { resolve } from 'node:path';
 
 // Try to re-fetch data
-export async function retryFetch<T>(name: string | number, fn: () => Promise<T>, retries = 3, waittime = 3): Promise<T> {
+export async function retryFetch<T>(
+  name: string | number,
+  func: () => Promise<T>,
+  retries = 3,
+  waittime = 3,
+): Promise<T> {
   let lastError: unknown;
 
   for (let i = 0; i < retries; i++) {
     try {
-      return await fn();
+      return await func();
     } catch (err) {
       lastError = err;
       console.warn(`[${name}]: ${i + 1}/${retries} failed, try again in ${waittime} seconds...`);
