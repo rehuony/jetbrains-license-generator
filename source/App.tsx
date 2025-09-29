@@ -1,6 +1,4 @@
 import { useGlobalStorage } from './hooks/use-storage';
-import reactLogo from '/react.svg';
-import viteLogo from '/vite.svg';
 
 function App() {
   const theme = useGlobalStorage(state => state.theme);
@@ -10,30 +8,6 @@ function App() {
 
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center text-center gap-6">
-      <div className="flex gap-8">
-        <a
-          href="https://vite.dev"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          <img
-            src={viteLogo}
-            alt="Vite logo"
-            className="w-28 h-28 transition-[filter] duration-300 hover:drop-shadow-[0_0_2em_#646cffaa]"
-          />
-        </a>
-        <a
-          href="https://react.dev"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          <img
-            src={reactLogo}
-            alt="React logo"
-            className="w-28 h-28 transition-[filter] duration-300 hover:drop-shadow-[0_0_2em_#61dafbaa] motion-safe:animate-[spin_20s_linear_infinite]"
-          />
-        </a>
-      </div>
       <h1 className="text-5xl font-bold">Vite + React</h1>
       <div className="p-8">
         <button
