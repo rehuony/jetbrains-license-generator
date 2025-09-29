@@ -3,4 +3,3 @@
 > [!NOTE]
 >
 > Online website for generating jetbrains product licenses
->

@@ -4,6 +4,7 @@ export default antfu(
   {
     react: true,
     typescript: true,
+    formatters: true,
     stylistic: { indent: 2, quotes: 'single', semi: true },
   },
   {
