@@ -1,10 +1,12 @@
-import { useState } from 'react';
-
+import { useGlobalStorage } from './hooks/use-storage';
 import reactLogo from '/react.svg';
 import viteLogo from '/vite.svg';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const theme = useGlobalStorage(state => state.theme);
+  const setTheme = useGlobalStorage(state => state.setTheme);
+
+  const handleClick = () => setTheme(theme === 'auto' ? 'dark' : theme === 'dark' ? 'light' : 'auto');
 
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center text-center gap-6">
@@ -36,10 +38,10 @@ function App() {
       <div className="p-8">
         <button
           type="button"
-          onClick={() => setCount(count => count + 1)}
+          onClick={handleClick}
           className="px-4 py-2 cursor-pointer rounded border-1 border-transparent bg-gray-100 hover:border-1 hover:border-purple-400 transition duration-200"
         >
-          {`count is ${count}`}
+          {`Theme is ${theme}`}
         </button>
         <p className="mt-4 font-light text-md">
           Edit
