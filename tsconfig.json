@@ -1,8 +1,12 @@
 {
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./source/*"]
+    }
+  },
   "references": [
     { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" },
-    { "path": "./tsconfig.script.json" }
+    { "path": "./tsconfig.node.json" }
   ],
   "files": []
 }

@@ -7,12 +7,14 @@
     "moduleDetection": "force",
     "useDefineForClassFields": true,
     "module": "ESNext",
+
     /* Bundler mode */
     "moduleResolution": "bundler",
     "paths": {
       "@/*": ["./source/*"]
     },
     "allowImportingTsExtensions": true,
+
     /* Linting */
     "strict": true,
     "noFallthroughCasesInSwitch": true,
@@ -25,5 +27,5 @@
     "skipLibCheck": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["source", "vite-env.d.ts"]
+  "include": ["source", "vite-env.d.ts", "vite.config.ts"]
 }
