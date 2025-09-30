@@ -1,3 +1,20 @@
+interface FIDEReleaseDownloadInfo {
+  link: string;
+  size: number;
+  checksumLink: string;
+}
+
+interface FIDEReleaseDownload {
+  linuxARM64?: FIDEReleaseDownloadInfo;
+  linux?: FIDEReleaseDownloadInfo;
+  windows?: FIDEReleaseDownloadInfo;
+  windowsZip?: FIDEReleaseDownloadInfo;
+  windowsZipWithOracleJRE?: FIDEReleaseDownloadInfo;
+  windowsARM64?: FIDEReleaseDownloadInfo;
+  mac?: FIDEReleaseDownloadInfo;
+  macM1?: FIDEReleaseDownloadInfo;
+}
+
 interface IDEDataRelease {
   [version: string]: {
     [arch in keyof FIDEReleaseDownload]: FIDEReleaseDownloadInfo;
