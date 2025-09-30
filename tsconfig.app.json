@@ -27,5 +27,5 @@
     "skipLibCheck": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["source", "vite-env.d.ts", "vite.config.ts"]
+  "include": ["source", "vite.config.ts"]
 }

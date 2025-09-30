@@ -6,7 +6,7 @@ type GlobalState = ThemeState;
 export const globalStorage = create<GlobalState>()(
   storageMiddleware(
     set => ({
-      theme: 'auto',
+      theme: 'system',
       setTheme: (theme) => {
         set((state) => {
           state.theme = theme;

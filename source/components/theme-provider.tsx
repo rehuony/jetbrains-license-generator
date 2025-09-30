@@ -5,9 +5,9 @@ interface Props {
   children: React.ReactNode;
 }
 
-const allThemes: UnionToTuple<ThemeUnion> = ['auto', 'dark', 'light'];
+const allThemes: UnionToTuple<ThemeUnion> = ['system', 'dark', 'light'];
 
-export default function ThemeProvider({ children }: Props) {
+export function ThemeProvider({ children }: Props) {
   const theme = useGlobalStorage(state => state.theme);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export default function ThemeProvider({ children }: Props) {
     const updateTheme = () => {
       let nextTheme: ThemeUnion = theme;
 
-      if (nextTheme === 'auto') {
+      if (nextTheme === 'system') {
         nextTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
       }
       // remove all old classnames
@@ -26,7 +26,7 @@ export default function ThemeProvider({ children }: Props) {
     };
 
     const themeListener = () => {
-      theme === 'auto' && updateTheme();
+      theme === 'system' && updateTheme();
     };
 
     // monitoring changes in the theme state

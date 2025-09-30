@@ -1,4 +1,4 @@
-type ThemeUnion = 'auto' | 'dark' | 'light';
+type ThemeUnion = 'system' | 'dark' | 'light';
 
 interface ThemeState {
   theme: ThemeUnion;
