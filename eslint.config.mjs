@@ -6,7 +6,7 @@ export default antfu(
     typescript: true,
     formatters: true,
     stylistic: { indent: 2, quotes: 'single', semi: true },
-    ignores: ['**/components/ui', '**/utils/shadcn.ts'],
+    ignores: ['**/components/shadcn', '**/utils/shadcn.ts'],
   },
   {
     rules: {
