@@ -213,9 +213,3 @@
     @apply bg-background text-foreground;
   }
 }
-
-.no-drag {
-  user-select: none;
-  -webkit-user-drag: none;
-  -moz-user-select: none;
-}
