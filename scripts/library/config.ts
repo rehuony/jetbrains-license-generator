@@ -5,7 +5,7 @@ import { resolve as resolvePath } from 'node:path';
 export const buildTimestamp = Date.now();
 
 // File path for saving the results
-export const destinationPath = resolvePath(import.meta.dirname, '../../source');
+export const destinationPath = resolvePath(import.meta.dirname, '../../public');
 export const jsonDataPath = resolvePath(destinationPath, 'generated/product.json');
 
 // Number of concurrent requests processed by the process
