@@ -213,3 +213,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+.no-drag {
+  -webkit-user-drag: none;
+}
