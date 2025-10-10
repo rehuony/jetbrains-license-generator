@@ -1,27 +1,26 @@
-import { buildTimestamp, jsonDataPath } from './library/config.js';
-import { generateIDEData } from './library/fetch-ide-data.js';
-import { generatePluginData } from './library/fetch-plugin-data.js';
-import { checkFileIsExist, saveFetchedData } from './library/fetch-product-utils.js';
+import { ideDataPath, pluginDataPath } from './utils/config.js';
+import { generateIDEData } from './utils/fetch-ide-data.js';
+import { generatePluginData } from './utils/fetch-plugin-data.js';
+import { checkIsFileExist, saveFetchedData } from './utils/fetch-product-utils.js';
 
-async function prebuild() {
-  const isExist = await checkFileIsExist(jsonDataPath);
-
-  if (isExist) {
-    console.log(`destination already exists, skip generation: ${jsonDataPath}`);
-    return;
-  }
-  console.log(`destination doesn't exists, regenerating: ${jsonDataPath}`);
-
-  const idedata = await generateIDEData();
-  const plugindata = await generatePluginData();
-
-  const totaldata = {
-    ides: idedata,
-    plugins: plugindata,
-    buildtime: buildTimestamp,
-  };
-
-  saveFetchedData(JSON.stringify(totaldata, null, 2), jsonDataPath);
+// Try to get information about ide products
+if (await checkIsFileExist(ideDataPath)) {
+  console.log(`ide data already exists, skip generation: ${ideDataPath}`);
+} else {
+  console.log(`ide data doesn't exists, regenerating: ${ideDataPath}`);
+  await saveFetchedData(JSON.stringify({
+    data: await generateIDEData(),
+    buildtime: Date.now(),
+  }, null, 2), ideDataPath);
 }
 
-await prebuild();
+// Try to get information about plugin products
+if (await checkIsFileExist(pluginDataPath)) {
+  console.log(`plugin data already exists, skip generation: ${pluginDataPath}`);
+} else {
+  console.log(`plugin data doesn't exists, regenerating: ${pluginDataPath}`);
+  await saveFetchedData(JSON.stringify({
+    data: await generatePluginData(),
+    buildtime: Date.now(),
+  }, null, 2), pluginDataPath);
+}

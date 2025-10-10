@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="16" height="16" viewBox="0 0 64 64"
+     aria-label="Shopify Liquid IntelliJ Plugin icon">
+  <defs>
+    <!-- Background water gradient -->
+    <linearGradient id="waterGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#00c6ff"/>
+      <stop offset="100%" stop-color="#0077ff"/>
+    </linearGradient>
+
+    <!-- Highlight gradient used by both waves -->
+    <linearGradient id="waveHighlight" x1="0" y1="0" x2="0" y2="1">
+      <!-- Bright crest -->
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.80"/>
+      <!-- Fade to transparent toward the trough -->
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.15"/>
+    </linearGradient>
+
+    <!-- Clip all waves to the circle -->
+    <clipPath id="circleClip">
+      <circle cx="32" cy="32" r="30" />
+    </clipPath>
+  </defs>
+
+  <!-- Circular boundary -->
+  <circle cx="32" cy="32" r="30"
+          fill="url(#waterGradient)"
+          stroke="#005ec2" stroke-width="4"/>
+
+  <!-- Waves (clipped) -->
+  <g clip-path="url(#circleClip)">
+    <!-- Upper wave -->
+    <path d="
+      M0 34
+      Q 8 30 16 34 24 38 32 34
+      Q40 30 48 34 56 38 64 34
+      V64 H0 Z"
+          fill="url(#waveHighlight)"/>
+
+    <!-- Lower wave (slightly deeper) -->
+    <path d="
+      M0 44
+      Q 8 40 16 44 24 48 32 44
+      Q40 40 48 44 56 48 64 44
+      V64 H0 Z"
+          fill="url(#waveHighlight)"/>
+  </g>
+</svg>

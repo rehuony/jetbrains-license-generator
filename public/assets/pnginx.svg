@@ -1,0 +1,20 @@
+<svg width="25" height="25" viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#009639;stop-opacity:1"/>
+            <stop offset="100%" style="stop-color:#00cc66;stop-opacity:1"/>
+        </linearGradient>
+    </defs>
+    <!-- Base Nginx-like hexagon with inner circle -->
+    <polygon points="12.5,2.5 21.5,7.5 21.5,17.5 12.5,22.5 3.5,17.5 3.5,7.5" fill="none" stroke="url(#grad1)"
+             stroke-width="2"/>
+    <circle cx="12.5" cy="12.5" r="4" fill="url(#grad1)"/>
+
+    <!-- PRO badge -->
+    <g aria-label="PRO" role="img">
+        <rect x="11.2" y="15.8" width="12.8" height="7" rx="1.6" fill="#0E7A3E"/>
+        <text x="17.6" y="20.6" font-family="Inter, Arial, Helvetica, sans-serif" font-size="4.1" font-weight="700"
+              text-anchor="middle" fill="#FFFFFF">PRO
+        </text>
+    </g>
+</svg>

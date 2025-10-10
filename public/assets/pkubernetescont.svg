@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+    <defs>
+        <style>
+            .hex { fill: #000; }
+            .circle { fill: #fff; }
+        </style>
+    </defs>
+
+    <polygon class="hex" points="64,8 112,36 112,92 64,120 16,92 16,36"/>
+
+    <circle class="circle" cx="64" cy="64" r="25"/>
+</svg>
