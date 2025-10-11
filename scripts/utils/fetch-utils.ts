@@ -31,7 +31,10 @@ export async function retryFetch<T>(
 }
 
 // Asynchronously executing functions in a promise array, the execution order cannot be guaranteed
-export async function scheduleAsyncTasks(promiseArray: (() => Promise<void>)[], processNumber = processes) {
+export async function scheduleAsyncTasks(
+  promiseArray: (() => Promise<void>)[],
+  processNumber = processes,
+) {
   let taskIndex = 0;
   const taskCount = promiseArray.length;
 

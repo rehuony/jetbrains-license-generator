@@ -11,7 +11,7 @@ export default antfu(
   {
     rules: {
       'antfu/if-newline': 'off',
-      'style/max-len': ['error', { code: 120, ignoreUrls: true, ignoreStrings: true }],
+      'style/max-len': ['error', { code: 100, ignoreUrls: true, ignoreStrings: true }],
       'style/brace-style': ['error', '1tbs'],
       'style/nonblock-statement-body-position': ['error', 'beside'],
     },

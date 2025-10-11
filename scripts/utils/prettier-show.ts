@@ -43,5 +43,7 @@ export function showSuccessText(text: string | number) {
 }
 
 export function showProcessText(text: string | number) {
-  console.log(`${csi_cpl}${csi_el}${foreground_color_grey}[PROCESS] ${sgr_faint}${text}${sgr_reset}`);
+  console.log(`${csi_cpl}${csi_el}${
+    foreground_color_grey
+  }[PROCESS] ${sgr_faint}${text}${sgr_reset}`);
 }

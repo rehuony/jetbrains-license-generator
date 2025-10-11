@@ -48,7 +48,9 @@ async function fetchPluginList(offset: number = 0, count: number = 0) {
             `https://plugins.jetbrains.com/api/searchPlugins?max=${maxNumber}&offset=${offset + i}`,
           ).then(res => res.ok ? res.json() as unknown as FPluginList : null);
 
-          if (response === null) throw new Error(`failed to fetch plugin list between ${queryRange}`);
+          if (response === null) {
+            throw new Error(`failed to fetch plugin list between ${queryRange}`);
+          }
 
           return response.plugins;
         }));
