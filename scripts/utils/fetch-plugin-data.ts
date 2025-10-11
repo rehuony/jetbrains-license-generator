@@ -94,9 +94,6 @@ async function fetchPluginData(id: number) {
   // Save the product icon file to the resource directory
   await saveFetchedData(iconData, iconPath);
 
-  // 0xe28083
-  // 0xe2808b
-
   return {
     type: 'plugin',
     id: response.id,

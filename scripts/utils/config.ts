@@ -4,6 +4,9 @@ import { resolve } from 'node:path';
 // Define whether the data should be regenerated
 export const regenerate = false;
 
+// Define regular expressions for filtering strings
+export const filterStringRegex = /[\u2003\u200B]/g;
+
 // File path for saving the results
 export const destinationPath = resolve(import.meta.dirname, '../../public');
 export const assetsPath = resolve(destinationPath, 'assets');

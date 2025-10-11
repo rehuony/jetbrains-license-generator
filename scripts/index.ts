@@ -1,4 +1,4 @@
-import { ideDataPath, pluginDataPath, regenerate } from './utils/config.js';
+import { filterStringRegex, ideDataPath, pluginDataPath, regenerate } from './utils/config.js';
 import { generateIDEData } from './utils/fetch-ide-data.js';
 import { generatePluginData } from './utils/fetch-plugin-data.js';
 import { checkIsFileExist, saveFetchedData } from './utils/fetch-product-utils.js';
@@ -12,7 +12,7 @@ if (await checkIsFileExist(ideDataPath) && !regenerate) {
   await saveFetchedData(JSON.stringify({
     data: await generateIDEData(),
     buildtime: Date.now(),
-  }, null, 2), ideDataPath);
+  }, null, 2).replaceAll(filterStringRegex, ''), ideDataPath);
 }
 
 // Try to generate data about plugin products
@@ -23,5 +23,5 @@ if (await checkIsFileExist(pluginDataPath) && !regenerate) {
   await saveFetchedData(JSON.stringify({
     data: await generatePluginData(),
     buildtime: Date.now(),
-  }, null, 2), pluginDataPath);
+  }, null, 2).replaceAll(filterStringRegex, ''), pluginDataPath);
 }
