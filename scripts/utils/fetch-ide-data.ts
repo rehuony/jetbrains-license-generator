@@ -1,9 +1,9 @@
 import { resolve } from 'node:path';
-import { assetsPath, destinationPath, ideProductCodes, processNumber } from './config.js';
-import { checkIsFileExist, formatProductName, retryFetch, saveFetchedData } from './fetch-product-utils.js';
+import { assetsPath, destinationPath, ideProductCodes } from './config.js';
+import { formatProductName, retryFetch, saveFetchedData, scheduleAsyncTasks } from './fetch-product-utils.js';
 
 // Get the target name by comparing the official name and product name
-function judgeIDEName(name: string, familyName: string) {
+function judgeName(name: string, familyName: string) {
   const ofclName = formatProductName(name);
   const pdfyName = formatProductName(familyName);
 
@@ -20,11 +20,11 @@ async function fetchIDEData(code: string) {
     `https://data.services.jetbrains.com/products?code=${code}&release.type=release&fields=code,salesCode,name,productFamilyName,link,description,tags,releases`,
   ).then(res => res.ok ? res.json() as unknown as FIDEDataItem[] : null);
 
-  if (response === null) throw new Error(`failed to fetch ide data for ${code}...`);
+  if (response === null) throw new Error(`${code}: failed to fetch ide data...`);
 
   const fideDataItem = response.pop();
 
-  if (fideDataItem === undefined) throw new Error(`fetched ide data for ${code} is empty...`);
+  if (fideDataItem === undefined) throw new Error(`${code}: fetched data is empty...`);
 
   const ideDataRelease: IDEDataRelease = {};
   fideDataItem.releases.forEach((item) => {
@@ -34,22 +34,19 @@ async function fetchIDEData(code: string) {
     ideDataRelease[item.majorVersion] = structuredClone(item.downloads);
   });
 
-  const ideName = judgeIDEName(fideDataItem.name, fideDataItem.productFamilyName);
+  const ideName = judgeName(fideDataItem.name, fideDataItem.productFamilyName);
   const iconName = formatProductName(ideName);
-  const iconPath = resolve(assetsPath, `${iconName}.svg`);
+  const iconPath = resolve(assetsPath, `ides/${iconName}.svg`);
 
-  // Save only if icon file does not exist
-  if (!await checkIsFileExist(iconPath)) {
-    // Fetch product icon bytes
-    const iconData = await fetch(
-      `https://resources.jetbrains.com/storage/logos/web/${iconName}/${iconName}.svg`,
-    ).then(res => res.ok ? res.bytes() : null);
+  // Fetch product icon bytes
+  const iconBytes = await fetch(
+    `https://resources.jetbrains.com/storage/logos/web/${iconName}/${iconName}.svg`,
+  ).then(res => res.ok ? res.bytes() : null);
 
-    if (iconData == null) throw new Error(`failed to fetch ide icon for ${code}...`);
+  if (iconBytes == null) throw new Error(`failed to fetch ide icon for ${code}...`);
 
-    // Save the product icon file to the resource directory
-    await saveFetchedData(iconData, iconPath);
-  }
+  // Save the product icon file to the resource directory
+  await saveFetchedData(iconBytes, iconPath);
 
   return {
     type: 'ide',
@@ -66,14 +63,9 @@ async function fetchIDEData(code: string) {
 // Generate all ide product information
 export async function generateIDEData() {
   let count = 0;
-  let taskIndex = 0;
-  const taskCount = ideProductCodes.length;
 
   const result: IDEDataItem[] = [];
   const failedCodes: string[] = [];
-
-  // Store the currently executing Promise
-  const runningPromises: Promise<void>[] = [];
 
   const allTasks = ideProductCodes.map(item => async () => {
     try {
@@ -82,28 +74,12 @@ export async function generateIDEData() {
       failedCodes.push(item);
     } finally {
       count++;
-      console.log(`fetching data for IDEs ... ${count}/${taskCount}`);
+      console.log(`fetching data for ides ... ${count}/${ideProductCodes.length}`);
     }
   });
 
-  // Execute the task and schedule the next task recursively
-  const scheduleTask = async (func: () => Promise<void>) => {
-    await func();
-
-    if (taskIndex < taskCount) {
-      return scheduleTask(allTasks[taskIndex++]);
-    } else {
-      return Promise.resolve();
-    }
-  };
-
-  while (taskIndex < processNumber && taskIndex < taskCount) {
-    const promise = scheduleTask(allTasks[taskIndex++]);
-    runningPromises.push(promise);
-  }
-
-  // Wait for all tasks to be completed
-  await Promise.all(runningPromises);
+  // Asynchronous execution of task list
+  await scheduleAsyncTasks(allTasks);
 
   if (failedCodes.length > 0) {
     console.warn(`[WARN]: completed with ${failedCodes.length} failures: ${failedCodes.join(', ')}`);

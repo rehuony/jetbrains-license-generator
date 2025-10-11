@@ -2,6 +2,7 @@ import type Stream from 'node:stream';
 
 import { promises } from 'node:fs';
 import { resolve } from 'node:path';
+import { processNumber as processes } from './config.js';
 
 // Format IDE names into unified format
 export function formatProductName(name: string) {
@@ -32,6 +33,34 @@ export async function retryFetch<T>(
   throw lastError;
 }
 
+// Asynchronously executing functions in a promise array, the execution order cannot be guaranteed
+export async function scheduleAsyncTasks(promiseArray: (() => Promise<void>)[], processNumber = processes) {
+  let taskIndex = 0;
+  const taskCount = promiseArray.length;
+
+  // Store the currently executing Promise
+  const runningPromises: Promise<void>[] = [];
+
+  // Execute the task and schedule the next task recursively
+  const scheduleTask = async (func: () => Promise<void>) => {
+    await func();
+
+    if (taskIndex < taskCount) {
+      return scheduleTask(promiseArray[taskIndex++]);
+    } else {
+      return Promise.resolve();
+    }
+  };
+
+  while (taskIndex < processNumber && taskIndex < taskCount) {
+    const promise = scheduleTask(promiseArray[taskIndex++]);
+    runningPromises.push(promise);
+  }
+
+  // Wait for all tasks to be completed
+  await Promise.all(runningPromises);
+}
+
 // Check if the file exists
 export async function checkIsFileExist(destination: string) {
   try {
@@ -49,7 +78,8 @@ export async function saveFetchedData<T extends
   | Iterable<string | NodeJS.ArrayBufferView>
   | AsyncIterable<string | NodeJS.ArrayBufferView>
   | Stream>(data: T, destination: string) {
+  // The directory where the recursively generated files are located
   await promises.mkdir(resolve(destination, '..'), { recursive: true });
-
+  // Save data to specified destination
   await promises.writeFile(destination, data, 'utf-8');
 }

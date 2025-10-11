@@ -5,7 +5,7 @@
       "code": "CL",
       "name": "CLion",
       "link": "https://www.jetbrains.com/clion",
-      "icon": "/assets/clion.svg",
+      "icon": "/assets/ides/clion.svg",
       "description": "A cross-platform C and C++ IDE",
       "tagName": [
         "C/C++",
@@ -1021,7 +1021,7 @@
       "code": "DB",
       "name": "DataGrip",
       "link": "https://www.jetbrains.com/datagrip",
-      "icon": "/assets/datagrip.svg",
+      "icon": "/assets/ides/datagrip.svg",
       "description": "The IDE for databases and SQL",
       "tagName": [
         "SQL/NoSQL",
@@ -1940,7 +1940,7 @@
       "code": "DC",
       "name": "dotCover",
       "link": "https://www.jetbrains.com/dotcover",
-      "icon": "/assets/dotcover.svg",
+      "icon": "/assets/ides/dotcover.svg",
       "description": ".NET code coverage tool",
       "tagName": [
         ".NET",
@@ -2326,7 +2326,7 @@
       "code": "DM",
       "name": "dotMemory",
       "link": "https://www.jetbrains.com/dotmemory",
-      "icon": "/assets/dotmemory.svg",
+      "icon": "/assets/ides/dotmemory.svg",
       "description": ".NET memory profiler",
       "tagName": [
         ".NET",
@@ -3031,7 +3031,7 @@
       "code": "DP",
       "name": "dotTrace",
       "link": "https://www.jetbrains.com/profiler",
-      "icon": "/assets/dottrace.svg",
+      "icon": "/assets/ides/dottrace.svg",
       "description": ".NET performance profiler",
       "tagName": [
         ".NET",
@@ -3873,7 +3873,7 @@
       "code": "DS",
       "name": "DataSpell",
       "link": "https://www.jetbrains.com/dataspell",
-      "icon": "/assets/dataspell.svg",
+      "icon": "/assets/ides/dataspell.svg",
       "description": "The IDE for data analysis",
       "tagName": [
         "Data Analysis",
@@ -4303,7 +4303,7 @@
       "code": "GO",
       "name": "GoLand",
       "link": "https://www.jetbrains.com/go",
-      "icon": "/assets/goland.svg",
+      "icon": "/assets/ides/goland.svg",
       "description": "An IDE for Go and Web",
       "tagName": [
         "Go",
@@ -5122,7 +5122,7 @@
       "code": "II",
       "name": "IntelliJ IDEA",
       "link": "https://www.jetbrains.com/idea",
-      "icon": "/assets/intellij-idea.svg",
+      "icon": "/assets/ides/intellij-idea.svg",
       "description": "The IDE for pro Java and Kotlin development",
       "tagName": [
         "Java",
@@ -6336,7 +6336,7 @@
       "code": "PC",
       "name": "PyCharm",
       "link": "https://www.jetbrains.com/pycharm",
-      "icon": "/assets/pycharm.svg",
+      "icon": "/assets/ides/pycharm.svg",
       "description": "The Only Python IDE you need",
       "tagName": [
         "Python",
@@ -7466,7 +7466,7 @@
       "code": "PS",
       "name": "PhpStorm",
       "link": "https://www.jetbrains.com/phpstorm",
-      "icon": "/assets/phpstorm.svg",
+      "icon": "/assets/ides/phpstorm.svg",
       "description": "A smart IDE for PHP and Web",
       "tagName": [
         "PHP",
@@ -8498,7 +8498,7 @@
       "code": "RC",
       "name": "ReSharper C++",
       "link": "https://www.jetbrains.com/resharper-cpp",
-      "icon": "/assets/resharper-cpp.svg",
+      "icon": "/assets/ides/resharper-cpp.svg",
       "description": "Visual Studio extension for C++ developers",
       "tagName": [
         "C/C++"
@@ -8782,7 +8782,7 @@
       "code": "RD",
       "name": "Rider",
       "link": "https://www.jetbrains.com/rider",
-      "icon": "/assets/rider.svg",
+      "icon": "/assets/ides/rider.svg",
       "description": "All-in-one IDE for .NET and game development",
       "tagName": [
         ".NET",
@@ -9645,7 +9645,7 @@
       "code": "RM",
       "name": "RubyMine",
       "link": "https://www.jetbrains.com/ruby",
-      "icon": "/assets/rubymine.svg",
+      "icon": "/assets/ides/rubymine.svg",
       "description": "A Ruby and Rails IDE",
       "tagName": [
         "Ruby, Rails",
@@ -10707,7 +10707,7 @@
       "code": "RR",
       "name": "RustRover",
       "link": "https://www.jetbrains.com/rust",
-      "icon": "/assets/rustrover.svg",
+      "icon": "/assets/ides/rustrover.svg",
       "description": "A powerful IDE for Rust",
       "tagName": [
         "Rust",
@@ -10919,7 +10919,7 @@
       "code": "RS0",
       "name": "ReSharper",
       "link": "https://www.jetbrains.com/resharper",
-      "icon": "/assets/resharper.svg",
+      "icon": "/assets/ides/resharper.svg",
       "description": "Visual Studio extensions",
       "tagName": [
         ".NET",
@@ -11327,7 +11327,7 @@
       "code": "TC",
       "name": "TeamCity",
       "link": "https://www.jetbrains.com/teamcity",
-      "icon": "/assets/teamcity.svg",
+      "icon": "/assets/ides/teamcity.svg",
       "description": "Powerful Continuous Integration out of the box",
       "tagName": [],
       "releases": {
@@ -11830,7 +11830,7 @@
       "code": "WS",
       "name": "WebStorm",
       "link": "https://www.jetbrains.com/webstorm",
-      "icon": "/assets/webstorm.svg",
+      "icon": "/assets/ides/webstorm.svg",
       "description": "A JavaScript and TypeScript IDE",
       "tagName": [
         "JavaScript, TypeScript",
@@ -12876,5 +12876,5 @@
       }
     }
   ],
-  "buildtime": 1760090210109
+  "buildtime": 1760152025542
 }

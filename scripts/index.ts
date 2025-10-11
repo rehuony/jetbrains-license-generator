@@ -3,7 +3,7 @@ import { generateIDEData } from './utils/fetch-ide-data.js';
 import { generatePluginData } from './utils/fetch-plugin-data.js';
 import { checkIsFileExist, saveFetchedData } from './utils/fetch-product-utils.js';
 
-// Try to get information about ide products
+// Try to generate data about ide products
 if (await checkIsFileExist(ideDataPath)) {
   console.log(`ide data already exists, skip generation: ${ideDataPath}`);
 } else {
@@ -14,7 +14,7 @@ if (await checkIsFileExist(ideDataPath)) {
   }, null, 2), ideDataPath);
 }
 
-// Try to get information about plugin products
+// Try to generate data about plugin products
 if (await checkIsFileExist(pluginDataPath)) {
   console.log(`plugin data already exists, skip generation: ${pluginDataPath}`);
 } else {
