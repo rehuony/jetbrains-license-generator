@@ -1,9 +1,5 @@
-import type Stream from 'node:stream';
-
-import { promises } from 'node:fs';
-import { resolve } from 'node:path';
-import { processNumber as processes } from './config.js';
-import { showErrorText, showWarnText } from './prettier-show-info.js';
+import { processNumber as processes } from '../config/config.js';
+import { showErrorText, showWarnText } from './prettier-show.js';
 
 // Format IDE names into unified format
 export function formatProductName(name: string) {
@@ -60,27 +56,4 @@ export async function scheduleAsyncTasks(promiseArray: (() => Promise<void>)[], 
 
   // Wait for all tasks to be completed
   await Promise.all(runningPromises);
-}
-
-// Check if the file exists
-export async function checkIsFileExist(destination: string) {
-  try {
-    await promises.access(destination);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-// Save data to local specified directory
-export async function saveFetchedData<T extends
-  | string
-  | NodeJS.ArrayBufferView
-  | Iterable<string | NodeJS.ArrayBufferView>
-  | AsyncIterable<string | NodeJS.ArrayBufferView>
-  | Stream>(data: T, destination: string) {
-  // The directory where the recursively generated files are located
-  await promises.mkdir(resolve(destination, '..'), { recursive: true });
-  // Save data to specified destination
-  await promises.writeFile(destination, data, 'utf-8');
 }

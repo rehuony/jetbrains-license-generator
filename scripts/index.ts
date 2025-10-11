@@ -1,27 +1,29 @@
-import { filterStringRegex, ideDataPath, pluginDataPath, regenerate } from './utils/config.js';
-import { generateIDEData } from './utils/fetch-ide-data.js';
-import { generatePluginData } from './utils/fetch-plugin-data.js';
-import { checkIsFileExist, saveFetchedData } from './utils/fetch-product-utils.js';
-import { showInfoText } from './utils/prettier-show-info.js';
+import { certificatePemPath, filterStringRegex, ideDataPath, pluginDataPath, privatePemPath } from './config/config.js';
+import { generateIDEData } from './library/fetch-ide-data.js';
+import { generatePluginData } from './library/fetch-plugin-data.js';
+import { generateCertificate } from './library/generate-certificate.js';
+import { checkPathExist, persistDataToFile } from './utils/system-utils.js';
 
 // Try to generate data about ide products
-if (await checkIsFileExist(ideDataPath) && !regenerate) {
-  showInfoText(`ide data already exists, skip generation: ${ideDataPath}`);
-} else {
-  showInfoText(`ide data doesn't exists, regenerating: ${ideDataPath}`);
-  await saveFetchedData(JSON.stringify({
+await checkPathExist([ideDataPath], async () => {
+  await persistDataToFile(JSON.stringify({
     data: await generateIDEData(),
     buildtime: Date.now(),
   }, null, 2).replaceAll(filterStringRegex, ''), ideDataPath);
-}
+});
 
 // Try to generate data about plugin products
-if (await checkIsFileExist(pluginDataPath) && !regenerate) {
-  showInfoText(`plugin data already exists, skip generation: ${pluginDataPath}`);
-} else {
-  showInfoText(`plugin data doesn't exists, regenerating: ${pluginDataPath}`);
-  await saveFetchedData(JSON.stringify({
+await checkPathExist([pluginDataPath], async () => {
+  await persistDataToFile(JSON.stringify({
     data: await generatePluginData(),
     buildtime: Date.now(),
   }, null, 2).replaceAll(filterStringRegex, ''), pluginDataPath);
-}
+});
+
+// Try to generate self-signed certificates
+await checkPathExist([privatePemPath, certificatePemPath], async () => {
+  const { privatePem, certificatePem } = await generateCertificate();
+
+  await persistDataToFile(privatePem, privatePemPath);
+  await persistDataToFile(certificatePem, certificatePemPath);
+});

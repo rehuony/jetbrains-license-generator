@@ -1,7 +1,7 @@
-import { resolve } from 'node:path';
-import { assetsPath, destinationPath } from './config.js';
-import { formatProductName, retryFetch, saveFetchedData, scheduleAsyncTasks } from './fetch-product-utils.js';
-import { showInfoText, showProcessText, showSuccessText, showWarnText } from './prettier-show-info.js';
+import { assetsPath, destinationPath } from '../config/config.js';
+import { formatProductName, retryFetch, scheduleAsyncTasks } from '../utils/fetch-utils.js';
+import { showInfoText, showProcessText, showSuccessText, showWarnText } from '../utils/prettier-show.js';
+import { persistDataToFile, resolveFilePath } from '../utils/system-utils.js';
 
 // Get the number of all plugins
 async function fetchPluginNumber() {
@@ -11,6 +11,11 @@ async function fetchPluginNumber() {
 
   if (response === null) return 0;
   return response.total;
+}
+
+// Get the target file path of icon
+function spliceIconPath(iconName: string) {
+  return resolveFilePath(assetsPath, `plugins/${iconName}.svg`);
 }
 
 // Get max number data starting from offset, if count = 0, fetch all rest plugins
@@ -82,7 +87,6 @@ async function fetchPluginData(id: number) {
 
   const pluginCode = response.purchaseInfo?.productCode ?? `${response.id}`;
   const iconName = formatProductName(pluginCode);
-  const iconPath = resolve(assetsPath, `plugins/${iconName}.svg`);
 
   // Fetch product icon bytes
   const iconData = await fetch(
@@ -92,7 +96,7 @@ async function fetchPluginData(id: number) {
   if (iconData == null) throw new Error(`failed to fetch plugin icon for ${id}...`);
 
   // Save the product icon file to the resource directory
-  await saveFetchedData(iconData, iconPath);
+  await persistDataToFile(iconData, spliceIconPath(iconName));
 
   return {
     type: 'plugin',
@@ -100,7 +104,7 @@ async function fetchPluginData(id: number) {
     code: pluginCode,
     name: response.name,
     link: `https://plugins.jetbrains.com${response.link}`,
-    icon: iconPath.replace(destinationPath, ''),
+    icon: spliceIconPath(iconName).replace(destinationPath, ''),
     description: response.description,
     tagName: response.tags?.map(item => item.name) ?? [],
   } as PluginDataItem;

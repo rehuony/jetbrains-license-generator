@@ -1,9 +1,6 @@
 import { availableParallelism } from 'node:os';
 import { resolve } from 'node:path';
 
-// Define whether the data should be regenerated
-export const regenerate = false;
-
 // Define regular expressions for filtering strings
 export const filterStringRegex = /[\u2003\u200B]/g;
 
@@ -12,6 +9,10 @@ export const destinationPath = resolve(import.meta.dirname, '../../public');
 export const assetsPath = resolve(destinationPath, 'assets');
 export const ideDataPath = resolve(destinationPath, 'generated/ide-data.json');
 export const pluginDataPath = resolve(destinationPath, 'generated/plugin-data.json');
+
+// File path for saving the certificates
+export const privatePemPath = resolve(import.meta.dirname, '../storage/cert.key');
+export const certificatePemPath = resolve(import.meta.dirname, '../storage/cert.crt');
 
 // Number of concurrent requests processed by the process
 export const processNumber = availableParallelism();

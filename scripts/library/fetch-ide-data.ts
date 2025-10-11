@@ -1,7 +1,7 @@
-import { resolve } from 'node:path';
-import { assetsPath, destinationPath, ideProductCodes } from './config.js';
-import { formatProductName, retryFetch, saveFetchedData, scheduleAsyncTasks } from './fetch-product-utils.js';
-import { showInfoText, showProcessText, showSuccessText, showWarnText } from './prettier-show-info.js';
+import { assetsPath, destinationPath, ideProductCodes } from '../config/config.js';
+import { formatProductName, retryFetch, scheduleAsyncTasks } from '../utils/fetch-utils.js';
+import { showInfoText, showProcessText, showSuccessText, showWarnText } from '../utils/prettier-show.js';
+import { persistDataToFile, resolveFilePath } from '../utils/system-utils.js';
 
 // Get the target name by comparing the official name and product name
 function judgeName(name: string, familyName: string) {
@@ -13,6 +13,11 @@ function judgeName(name: string, familyName: string) {
   } else {
     return name;
   }
+}
+
+// Get the target file path of icon
+function spliceIconPath(iconName: string) {
+  return resolveFilePath(assetsPath, `ides/${iconName}.svg`);
 }
 
 // Get ide product information through product code
@@ -37,7 +42,6 @@ async function fetchIDEData(code: string) {
 
   const ideName = judgeName(fideDataItem.name, fideDataItem.productFamilyName);
   const iconName = formatProductName(ideName);
-  const iconPath = resolve(assetsPath, `ides/${iconName}.svg`);
 
   // Fetch product icon bytes
   const iconBytes = await fetch(
@@ -47,14 +51,14 @@ async function fetchIDEData(code: string) {
   if (iconBytes == null) throw new Error(`failed to fetch ide icon for ${code}`);
 
   // Save the product icon file to the resource directory
-  await saveFetchedData(iconBytes, iconPath);
+  await persistDataToFile(iconBytes, spliceIconPath(iconName));
 
   return {
     type: 'ide',
     code: fideDataItem.salesCode,
     name: ideName,
     link: fideDataItem.link,
-    icon: iconPath.replace(destinationPath, ''),
+    icon: spliceIconPath(iconName).replace(destinationPath, ''),
     description: fideDataItem.description,
     tagName: fideDataItem.tags.map(item => item.name),
     releases: ideDataRelease,
