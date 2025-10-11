@@ -1,6 +1,9 @@
 import { availableParallelism } from 'node:os';
 import { resolve } from 'node:path';
 
+// Define whether the data should be regenerated
+export const regenerate = false;
+
 // File path for saving the results
 export const destinationPath = resolve(import.meta.dirname, '../../public');
 export const assetsPath = resolve(destinationPath, 'assets');

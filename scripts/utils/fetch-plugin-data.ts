@@ -1,6 +1,7 @@
 import { resolve } from 'node:path';
 import { assetsPath, destinationPath } from './config.js';
 import { formatProductName, retryFetch, saveFetchedData, scheduleAsyncTasks } from './fetch-product-utils.js';
+import { showInfoText, showProcessText, showSuccessText, showWarnText } from './prettier-show-info.js';
 
 // Get the number of all plugins
 async function fetchPluginNumber() {
@@ -50,16 +51,20 @@ async function fetchPluginList(offset: number = 0, count: number = 0) {
         failedRanges.push(queryRange);
       } finally {
         index += maxNumber;
-        console.log(`fetching plugin list ... ${index}/${taskPluginNumber}`);
+        showProcessText(`fetching plugin list ... ${index}/${taskPluginNumber}`);
       }
     });
   }
 
+  // Show start prompt message
+  showInfoText('start fetching plugin list\n');
   // Asynchronous execution of task list
   await scheduleAsyncTasks(allTasks);
-
+  // Show done prompt message
   if (failedRanges.length > 0) {
-    console.warn(`[WARN]: completed with ${failedRanges.length} failures: ${failedRanges.join(', ')}`);
+    showWarnText(`completed with ${failedRanges.length} failures: ${failedRanges.join(', ')}`);
+  } else {
+    showSuccessText('completed fetch plugin list');
   }
 
   return result.sort((left, right) => {
@@ -73,7 +78,7 @@ async function fetchPluginData(id: number) {
     `https://plugins.jetbrains.com/api/plugins/${id}`,
   ).then(res => res.ok ? res.json() as unknown as FPluginData : null);
 
-  if (response === null) throw new Error(`failed to fetch plugin data for ${id}...`);
+  if (response === null) throw new Error(`failed to fetch plugin data for ${id}`);
 
   const pluginCode = response.purchaseInfo?.productCode ?? `${response.id}`;
   const iconName = formatProductName(pluginCode);
@@ -88,6 +93,9 @@ async function fetchPluginData(id: number) {
 
   // Save the product icon file to the resource directory
   await saveFetchedData(iconData, iconPath);
+
+  // 0xe28083
+  // 0xe2808b
 
   return {
     type: 'plugin',
@@ -120,15 +128,19 @@ export async function generatePluginData() {
       failedCodes.push(String(item.id));
     } finally {
       count++;
-      console.log(`fetching data for plugins ... ${count}/${pluginList.length}`);
+      showProcessText(`fetching plugin data ... ${count}/${pluginList.length}`);
     }
   });
 
+  // Show start prompt message
+  showInfoText('start generating plugin data\n');
   // Asynchronous execution of task list
   await scheduleAsyncTasks(allTasks);
-
+  // Show done prompt message
   if (failedCodes.length > 0) {
-    console.warn(`[WARN]: completed with ${failedCodes.length} failures: ${failedCodes.join(', ')}`);
+    showWarnText(`completed with ${failedCodes.length} failures: ${failedCodes.join(', ')}`);
+  } else {
+    showSuccessText('completed generate plugin data');
   }
 
   return result.sort((left, right) => {

@@ -3,6 +3,7 @@ import type Stream from 'node:stream';
 import { promises } from 'node:fs';
 import { resolve } from 'node:path';
 import { processNumber as processes } from './config.js';
+import { showErrorText, showWarnText } from './prettier-show-info.js';
 
 // Format IDE names into unified format
 export function formatProductName(name: string) {
@@ -23,13 +24,13 @@ export async function retryFetch<T>(
       return await func();
     } catch (err) {
       lastError = err;
-      console.warn(`[${name}]: ${i + 1}/${retries} failed, try again in ${waittime} seconds...`);
+      showWarnText(`[${name}]: ${i + 1}/${retries} failed, try again in ${waittime} seconds...`);
       await new Promise(resolve => setTimeout(resolve, waittime * 1000));
     }
   }
 
   const errMessage = lastError instanceof Error ? lastError.message : 'unknow error~';
-  console.error(`[${name}]: failed to fetch data because of ${errMessage}`);
+  showErrorText(`[${name}]: failed to fetch data because of ${errMessage}`);
   throw lastError;
 }
 

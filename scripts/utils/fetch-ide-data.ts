@@ -1,6 +1,7 @@
 import { resolve } from 'node:path';
 import { assetsPath, destinationPath, ideProductCodes } from './config.js';
 import { formatProductName, retryFetch, saveFetchedData, scheduleAsyncTasks } from './fetch-product-utils.js';
+import { showInfoText, showProcessText, showSuccessText, showWarnText } from './prettier-show-info.js';
 
 // Get the target name by comparing the official name and product name
 function judgeName(name: string, familyName: string) {
@@ -20,11 +21,11 @@ async function fetchIDEData(code: string) {
     `https://data.services.jetbrains.com/products?code=${code}&release.type=release&fields=code,salesCode,name,productFamilyName,link,description,tags,releases`,
   ).then(res => res.ok ? res.json() as unknown as FIDEDataItem[] : null);
 
-  if (response === null) throw new Error(`${code}: failed to fetch ide data...`);
+  if (response === null) throw new Error(`failed to fetch ide data for ${code}`);
 
   const fideDataItem = response.pop();
 
-  if (fideDataItem === undefined) throw new Error(`${code}: fetched data is empty...`);
+  if (fideDataItem === undefined) throw new Error(`fetched ide data is empty for ${code}`);
 
   const ideDataRelease: IDEDataRelease = {};
   fideDataItem.releases.forEach((item) => {
@@ -43,7 +44,7 @@ async function fetchIDEData(code: string) {
     `https://resources.jetbrains.com/storage/logos/web/${iconName}/${iconName}.svg`,
   ).then(res => res.ok ? res.bytes() : null);
 
-  if (iconBytes == null) throw new Error(`failed to fetch ide icon for ${code}...`);
+  if (iconBytes == null) throw new Error(`failed to fetch ide icon for ${code}`);
 
   // Save the product icon file to the resource directory
   await saveFetchedData(iconBytes, iconPath);
@@ -74,15 +75,19 @@ export async function generateIDEData() {
       failedCodes.push(item);
     } finally {
       count++;
-      console.log(`fetching data for ides ... ${count}/${ideProductCodes.length}`);
+      showProcessText(`fetching ide data ... ${count}/${ideProductCodes.length}`);
     }
   });
 
+  // Show start prompt message
+  showInfoText('start generating ide data\n');
   // Asynchronous execution of task list
   await scheduleAsyncTasks(allTasks);
-
+  // Show done prompt message
   if (failedCodes.length > 0) {
-    console.warn(`[WARN]: completed with ${failedCodes.length} failures: ${failedCodes.join(', ')}`);
+    showWarnText(`completed with ${failedCodes.length} failures: ${failedCodes.join(', ')}`);
+  } else {
+    showSuccessText('completed generate ide data');
   }
 
   return result.sort((left, right) => {
