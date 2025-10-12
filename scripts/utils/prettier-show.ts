@@ -27,23 +27,21 @@ export const background_color_red = '\x1B[48;2;200;0;0m';
 export const background_color_yellow = '\x1B[48;2;200;200;90m';
 
 export function showInfoText(text: string | number) {
-  console.log(`${foreground_color_blue}[INFO] ${sgr_faint}${text}${sgr_reset}`);
+  console.log(`${foreground_color_blue}[INFO] ${text}${sgr_reset}`);
 }
 
 export function showWarnText(text: string | number) {
-  console.log(`${foreground_color_yellow}[WARN] ${sgr_faint}${text}${sgr_reset}`);
+  console.log(`${foreground_color_yellow}[WARN] ${text}${sgr_reset}`);
 }
 
 export function showErrorText(text: string | number) {
-  console.log(`${foreground_color_red}[ERROR] ${sgr_faint}${text}${sgr_reset}`);
+  console.log(`${foreground_color_red}[ERROR] ${text}${sgr_reset}`);
 }
 
 export function showSuccessText(text: string | number) {
-  console.log(`${foreground_color_green}[SUCCESS] ${sgr_faint}${text}${sgr_reset}`);
+  console.log(`${foreground_color_green}[SUCCESS] ${text}${sgr_reset}`);
 }
 
 export function showProcessText(text: string | number) {
-  console.log(`${csi_cpl}${csi_el}${
-    foreground_color_grey
-  }[PROCESS] ${sgr_faint}${text}${sgr_reset}`);
+  console.log(`${csi_cpl}${csi_el}${foreground_color_grey}[PROCESS] ${text}${sgr_reset}`);
 }

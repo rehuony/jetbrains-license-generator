@@ -1,4 +1,4 @@
-import { assetsPath, destinationPath, ideProductCodes } from '../config/config.js';
+import { assetsPath, ideProductCodes, publicPath } from '../config/config.js';
 import { formatProductName, retryFetch, scheduleAsyncTasks } from '../utils/fetch-utils.js';
 import { showInfoText, showProcessText, showSuccessText, showWarnText } from '../utils/prettier-show.js';
 import { persistDataToFile, resolveFilePath } from '../utils/system-utils.js';
@@ -8,11 +8,9 @@ function judgeName(name: string, familyName: string) {
   const ofclName = formatProductName(name);
   const pdfyName = formatProductName(familyName);
 
-  if (ofclName.includes(pdfyName)) {
-    return familyName;
-  } else {
-    return name;
-  }
+  if (ofclName.includes(pdfyName)) return familyName;
+  
+  return name;
 }
 
 // Get the target file path of icon
@@ -58,7 +56,7 @@ async function fetchIDEData(code: string) {
     code: fideDataItem.salesCode,
     name: ideName,
     link: fideDataItem.link,
-    icon: spliceIconPath(iconName).replace(destinationPath, ''),
+    icon: spliceIconPath(iconName).replace(publicPath, ''),
     description: fideDataItem.description,
     tagName: fideDataItem.tags.map(item => item.name),
     releases: ideDataRelease,

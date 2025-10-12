@@ -1,4 +1,4 @@
-import { processNumber as processes } from '../config/config.js';
+import { parallelismNumber } from '../config/config.js';
 import { showErrorText, showWarnText } from './prettier-show.js';
 
 // Format IDE names into unified format
@@ -33,7 +33,7 @@ export async function retryFetch<T>(
 // Asynchronously executing functions in a promise array, the execution order cannot be guaranteed
 export async function scheduleAsyncTasks(
   promiseArray: (() => Promise<void>)[],
-  processNumber = processes,
+  processNumber = parallelismNumber,
 ) {
   let taskIndex = 0;
   const taskCount = promiseArray.length;

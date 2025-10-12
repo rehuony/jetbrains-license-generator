@@ -2,6 +2,7 @@ import type Stream from 'node:stream';
 
 import { promises } from 'node:fs';
 import { resolve } from 'node:path';
+import { rootPath } from '../config/config.js';
 import { showInfoText } from './prettier-show.js';
 
 // Externally exposed path parsing function
@@ -10,7 +11,7 @@ export function resolveFilePath(...paths: string[]) {
 }
 
 // Detects whether the file array exists and calls a callback function on failure
-export async function checkPathExist(paths: string[], func: () => Promise<void>) {
+export async function checkIsPathExist(paths: string[], func: () => Promise<void>) {
   const existResults = await Promise.all(
     paths.map(async (item) => {
       try {
@@ -22,13 +23,27 @@ export async function checkPathExist(paths: string[], func: () => Promise<void>)
     }),
   );
   const isExist = existResults.every(Boolean);
+  const simplePaths = paths.map((item) => {
+    let relativePath = item.replace(rootPath, '').replace(/\\/g, '/');
+
+    if (relativePath.startsWith('/') || relativePath.startsWith('\\')) {
+      relativePath = relativePath.substring(1);
+    }
+
+    return `${relativePath}`;
+  });
 
   if (!isExist) {
-    showInfoText(`${paths.join(', ')} not exist, regenerating...`);
+    showInfoText(`${simplePaths.join(', ')} not exist, regenerating...`);
     return await func();
   };
 
-  showInfoText(`${paths.join(', ')} existed, skip generation...`);
+  showInfoText(`${simplePaths.join(', ')} existed, skip generation...`);
+}
+
+// Read data from the specified file
+export async function readFileData(destination: string) {
+  return await promises.readFile(destination, { encoding: 'utf8' });
 }
 
 // Save data to local specified directory

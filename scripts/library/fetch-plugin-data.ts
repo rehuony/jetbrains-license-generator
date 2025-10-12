@@ -1,4 +1,4 @@
-import { assetsPath, destinationPath } from '../config/config.js';
+import { assetsPath, publicPath } from '../config/config.js';
 import { formatProductName, retryFetch, scheduleAsyncTasks } from '../utils/fetch-utils.js';
 import { showInfoText, showProcessText, showSuccessText, showWarnText } from '../utils/prettier-show.js';
 import { persistDataToFile, resolveFilePath } from '../utils/system-utils.js';
@@ -106,7 +106,7 @@ async function fetchPluginData(id: number) {
     code: pluginCode,
     name: response.name,
     link: `https://plugins.jetbrains.com${response.link}`,
-    icon: spliceIconPath(iconName).replace(destinationPath, ''),
+    icon: spliceIconPath(iconName).replace(publicPath, ''),
     description: response.description,
     tagName: response.tags?.map(item => item.name) ?? [],
   } as PluginDataItem;

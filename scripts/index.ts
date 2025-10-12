@@ -1,29 +1,42 @@
-import { certificatePemPath, filterStringRegex, ideDataPath, pluginDataPath, privatePemPath } from './config/config.js';
+import { certificateDataPath, filterRegexp, ideDataPath, pluginDataPath, privatePemPath, publicPemPath, rootPemPath } from './config/config.js';
 import { generateIDEData } from './library/fetch-ide-data.js';
 import { generatePluginData } from './library/fetch-plugin-data.js';
-import { generateCertificate } from './library/generate-certificate.js';
-import { checkPathExist, persistDataToFile } from './utils/system-utils.js';
+import { generateCertificate, generateCertificateConf } from './library/generate-certificate.js';
+import { checkIsPathExist, persistDataToFile, readFileData } from './utils/system-utils.js';
 
 // Try to generate data about ide products
-await checkPathExist([ideDataPath], async () => {
+await checkIsPathExist([ideDataPath], async () => {
   await persistDataToFile(JSON.stringify({
     data: await generateIDEData(),
     buildtime: Date.now(),
-  }, null, 2).replaceAll(filterStringRegex, ''), ideDataPath);
+  }, null, 2).replaceAll(filterRegexp, ''), ideDataPath);
 });
 
 // Try to generate data about plugin products
-await checkPathExist([pluginDataPath], async () => {
+await checkIsPathExist([pluginDataPath], async () => {
   await persistDataToFile(JSON.stringify({
     data: await generatePluginData(),
     buildtime: Date.now(),
-  }, null, 2).replaceAll(filterStringRegex, ''), pluginDataPath);
+  }, null, 2).replaceAll(filterRegexp, ''), pluginDataPath);
 });
 
-// Try to generate self-signed certificates
-await checkPathExist([privatePemPath, certificatePemPath], async () => {
-  const { privatePem, certificatePem } = await generateCertificate();
+// Try to generate data about certificate
+await checkIsPathExist([certificateDataPath], async () => {
+  // Generate self-signed certificates
+  await checkIsPathExist([publicPemPath, privatePemPath], async () => {
+    const { publicPem, privatePem } = await generateCertificate();
 
-  await persistDataToFile(privatePem, privatePemPath);
-  await persistDataToFile(certificatePem, certificatePemPath);
+    await persistDataToFile(publicPem, publicPemPath);
+    await persistDataToFile(privatePem, privatePemPath);
+  });
+
+  const rootPem = await readFileData(rootPemPath);
+  const publicPem = await readFileData(publicPemPath);
+  const privatePem = await readFileData(privatePemPath);
+
+  await persistDataToFile(JSON.stringify({
+    conf: await generateCertificateConf(rootPem, publicPem),
+    publicPem: publicPem.trim(),
+    privatePem: privatePem.trim(),
+  }, null, 2).replaceAll(filterRegexp, ''), certificateDataPath);
 });
