@@ -106,7 +106,7 @@ async function fetchPluginData(id: number) {
     code: pluginCode,
     name: response.name,
     link: `https://plugins.jetbrains.com${response.link}`,
-    icon: spliceIconPath(iconName).replace(publicPath, ''),
+    icon: spliceIconPath(iconName).replace(publicPath, '').replace(/\\/g, '/'),
     description: response.description,
     tagName: response.tags?.map(item => item.name) ?? [],
   } as PluginDataItem;

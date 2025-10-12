@@ -9,7 +9,7 @@ function judgeName(name: string, familyName: string) {
   const pdfyName = formatProductName(familyName);
 
   if (ofclName.includes(pdfyName)) return familyName;
-  
+
   return name;
 }
 
@@ -56,7 +56,7 @@ async function fetchIDEData(code: string) {
     code: fideDataItem.salesCode,
     name: ideName,
     link: fideDataItem.link,
-    icon: spliceIconPath(iconName).replace(publicPath, ''),
+    icon: spliceIconPath(iconName).replace(publicPath, '').replace(/\\/g, '/'),
     description: fideDataItem.description,
     tagName: fideDataItem.tags.map(item => item.name),
     releases: ideDataRelease,
