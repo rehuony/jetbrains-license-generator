@@ -1,9 +1,9 @@
 import { create } from 'zustand';
 import { storageMiddleware } from '@/hooks/use-storage';
 
-type GlobalState = ThemeState & SearchState;
+type LocalState = ThemeState & SearchState;
 
-export const globalStorage = create<GlobalState>()(
+export const localStorage = create<LocalState>()(
   storageMiddleware(
     set => ({
       text: '',
@@ -19,6 +19,6 @@ export const globalStorage = create<GlobalState>()(
         });
       },
     }),
-    'globalStorage',
+    'localStorage',
   ),
 );

@@ -1,11 +1,11 @@
 import { Monitor, Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/shadcn/button';
-import { useGlobalStorage } from '@/hooks/use-storage';
+import { useLocalStorage } from '@/hooks/use-storage';
 import { cn } from '@/utils/shadcn';
 
 export function ThemeToggle() {
-  const theme = useGlobalStorage(state => state.theme);
-  const setTheme = useGlobalStorage(state => state.setTheme);
+  const theme = useLocalStorage(state => state.theme);
+  const setTheme = useLocalStorage(state => state.setTheme);
 
   return (
     <div className="relative inline-grid grid-cols-3 rounded-full overflow-hidden bg-secondary-foreground/10">

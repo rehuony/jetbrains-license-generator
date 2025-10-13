@@ -1,4 +1,7 @@
 export function CardIDE(props: IDEDataItem) {
+  const copyProductLicense = async () => {
+  };
+
   return (
     <article className="w-5/6 rounded-lg shadow-xl bg-card-foreground/5 shadow-card-foreground/20 select-none">
       <header className="flex items-center justify-between px-4 border-b-1">
@@ -19,7 +22,7 @@ export function CardIDE(props: IDEDataItem) {
           <span className="text-card-foreground/50 group-hover:invisible">
             {'*'.repeat(126)}
           </span>
-          <span className="invisible absolute left-0 top-0 flex items-center justify-center size-full rounded-full font-light text-card-foreground/80 group-hover:visible group-hover:bg-card-foreground/10">
+          <span onClick={copyProductLicense} className="invisible absolute left-0 top-0 flex items-center justify-center size-full rounded-full font-light text-card-foreground/80 group-hover:visible group-hover:bg-card-foreground/10">
             Copy to clipboard
           </span>
         </span>

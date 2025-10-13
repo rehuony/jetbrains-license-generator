@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useGlobalStorage } from '@/hooks/use-storage';
+import { useLocalStorage } from '@/hooks/use-storage';
 
 interface Props {
   children: React.ReactNode;
@@ -8,7 +8,7 @@ interface Props {
 const allThemes: UnionToTuple<ThemeUnion> = ['system', 'dark', 'light'];
 
 export function ThemeProvider({ children }: Props) {
-  const theme = useGlobalStorage(state => state.theme);
+  const theme = useLocalStorage(state => state.theme);
 
   useEffect(() => {
     const root = document.documentElement;

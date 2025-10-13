@@ -13,4 +13,6 @@ export function storageMiddleware<T>(
   });
 }
 
-export { globalStorage as useGlobalStorage } from '@/hooks/storage/global-storage';
+export { certificateStorage as useCertificateStorage } from '@/hooks/storage/certificate-storage';
+export { licenseStorage as useLicenseStorage } from '@/hooks/storage/license-storage';
+export { localStorage as useLocalStorage } from '@/hooks/storage/local-storage';
