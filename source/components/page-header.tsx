@@ -5,7 +5,7 @@ import { cn } from '@/utils/shadcn';
 
 export function PageHeader({ className }: React.ComponentProps<'header'>) {
   return (
-    <header className={cn('sticky top-0 w-full bg-secondary', className)}>
+    <header className={cn('sticky top-0 w-full bg-secondary z-50', className)}>
       {/* TODO: adapt to small size equipment */}
       <div className="flex items-center justify-between p-3">
         <HeaderLogo />

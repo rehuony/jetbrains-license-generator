@@ -43,8 +43,18 @@ interface PluginDataItem {
   tagName: string[];
 }
 
-interface ProductJsonData {
-  ides: IDEDataItem[];
-  plugins: PluginDataItem[];
+interface IDEDataJSON {
+  data: IDEDataItem[];
   buildtime: number;
-};
+}
+
+interface PluginDataJSON {
+  data: PluginDataItem[];
+  buildtime: number;
+}
+
+interface CertificateDataJSON {
+  conf: string;
+  publicPem: string;
+  privatePem: string;
+}

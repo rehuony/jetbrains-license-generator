@@ -12,8 +12,8 @@ export function HeaderLogo({ className }: React.ComponentProps<'a'>) {
           rel="noopener noreferrer"
           className={cn('flex items-center gap-2 cursor-pointer select-none', className)}
         >
-          <img src={PageLogo} alt="Website logo" className="size-10" />
-          <span className="text-2xl font-bold text-foreground/80">
+          <img src={PageLogo} alt="Website logo" className="size-10 min-w-10 min-h-10" />
+          <span className="text-2xl font-bold text-foreground/80 hidden md:block">
             JetBrains License Generator
           </span>
         </a>
