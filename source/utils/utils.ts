@@ -1,3 +1,7 @@
+export function convertPemToString(pemCert: string) {
+  return pemCert.split(/\s+/g).reduce((result, line) => (line.includes('--') ? result : result + line), '');
+}
+
 export function debounce<T extends any[]>(
   func: (...args: T) => void,
   delay: number,
@@ -30,4 +34,11 @@ export function generateLicenseId() {
   return Array.from({ length: 10 }, () => {
     return charList[Math.floor(Math.random() * charList.length)];
   }).join('');
+}
+
+export function isProductMatch(productName: string, searchText: string) {
+  searchText = searchText.toLowerCase().split(/\s+/g).join('-').replaceAll('+', 'p');
+  productName = productName.toLowerCase().split(/\s+/g).join('-').replaceAll('+', 'p');
+
+  return searchText === '' ? true : productName.includes(searchText);
 }
