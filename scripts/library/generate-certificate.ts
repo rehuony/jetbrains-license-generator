@@ -60,7 +60,7 @@ export async function generateCertificateConf(
 
   const x = new forge.jsbn.BigInteger(signatureHex, 16);
   const y = new forge.jsbn.BigInteger('65537');
-  const z = new forge.jsbn.BigInteger(convertPublicKeyToForge(rootCert.publicKey).n);
+  const z = new forge.jsbn.BigInteger(convertPublicKeyToForge(rootCert.publicKey).n.toString());
 
   const publicKeyForge = convertPublicKeyToForge(publicCert.publicKey);
 
