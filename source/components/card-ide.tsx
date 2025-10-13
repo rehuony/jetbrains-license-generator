@@ -2,6 +2,7 @@ import clipboard from 'clipboardy';
 import forge from 'node-forge';
 import { useCallback } from 'react';
 import { toast } from 'sonner';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/shadcn/tooltip';
 import { useCertificateStorage, useLicenseStorage, useLocalStorage } from '@/hooks/use-storage';
 import { cn } from '@/utils/shadcn';
 import { convertPemToString, generateLicenseId, isProductMatch } from '@/utils/utils';
@@ -60,7 +61,7 @@ export function CardIDE(props: IDEDataItem) {
     <article className={cn('w-5/6 rounded-lg shadow-xl bg-card-foreground/5 shadow-card-foreground/20 select-none', isProductMatch(props.name, text) ? '' : 'hidden')}>
       <header className="flex items-center justify-between px-4 border-b-1">
         <span className="size-16 translate-y-1/2">
-          <img src={props.icon} alt={`${props.name}'s logo`} className="size-full no-drag" />
+          <img src={props.icon} alt={`${props.name}'s logo`} className="size-full min-w-16 min-h-16 no-drag" />
         </span>
         <span className="text-sm text-card-foreground/50 rounded-full border cursor-pointer hover:text-card-foreground/80 hover:border-ring">
           <a href={props.link} target="_blank" rel="noopener noreferrer" className="block px-8 py-2 ">
@@ -70,7 +71,14 @@ export function CardIDE(props: IDEDataItem) {
       </header>
       <section className="flex flex-col gap-8 px-4 pt-8 pb-4">
         <span className="text-2xl font-mono font-light truncate translate-y-1/2">
-          {props.name}
+          <Tooltip>
+            <TooltipTrigger>
+              {props.name}
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              {props.name}
+            </TooltipContent>
+          </Tooltip>
         </span>
         <span className="relative text-left text-sm text-wrap wrap-anywhere group">
           <span className="text-card-foreground/50 group-hover:invisible">
