@@ -1,3 +1,11 @@
+import type { ClassValue } from 'clsx';
+import { clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
 export function convertPemToString(pemCert: string) {
   return pemCert.split(/\s+/g).reduce((result, line) => (line.includes('--') ? result : result + line), '');
 }

@@ -1,11 +1,8 @@
 import clipboard from 'clipboardy';
 import forge from 'node-forge';
 import { useCallback } from 'react';
-import { toast } from 'sonner';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/shadcn/tooltip';
 import { useCertificateStorage, useLicenseStorage, useLocalStorage } from '@/hooks/use-storage';
-import { cn } from '@/utils/shadcn';
-import { convertPemToString, generateLicenseId, isProductMatch } from '@/utils/utils';
+import { cn, convertPemToString, generateLicenseId, isProductMatch } from '@/utils/utils';
 
 export function CardPlugin(props: PluginDataItem) {
   const text = useLocalStorage(state => state.text);
@@ -51,41 +48,51 @@ export function CardPlugin(props: PluginDataItem) {
     const sigResultsBase64 = forge.util.encode64(signatureBytes);
 
     const publicPemString = convertPemToString(publicPem);
-    // eslint-disable-next-line style/max-len
+
     const pluginLicense = `${licenseId}-${licensePartBase64}-${sigResultsBase64}-${publicPemString}`;
 
     await clipboard.write(pluginLicense);
-    toast(`successfully copy ${props.name}'s license`);
-  }, [email, expiryDate, privatePem, props.code, props.name, publicPem, username]);
+    // toast(`successfully copy ${props.name}'s license`);
+  }, [email, expiryDate, privatePem, props.code, publicPem, username]);
 
   return (
-    <article className={cn('w-5/6 rounded-lg shadow-xl bg-card-foreground/5 shadow-card-foreground/20 select-none', isProductMatch(props.name, text) ? '' : 'hidden')}>
-      <header className="flex items-center justify-between px-4 border-b-1">
+    <article className={cn(`w-5/6 rounded-xl bg-foreground/10 shadow-xl ring shadow-foreground/20 ring-foreground/10 duration-300 select-none hover:-translate-y-1`, isProductMatch(props.name, text) ? '' : `hidden`)}>
+      <header className="flex items-center justify-between border-b-1 px-4">
         <span className="size-16 translate-y-1/2">
-          <img src={props.icon} alt={`${props.name}'s logo`} className="size-full min-w-16 min-h-16 no-drag" />
+          <img
+            src={props.icon}
+            alt={`${props.name}'s logo`}
+            className="pointer-events-none size-full min-h-16 min-w-16"
+          />
         </span>
-        <span className="text-sm text-card-foreground/50 rounded-full border cursor-pointer hover:text-card-foreground/80 hover:border-ring">
-          <a href={props.link} target="_blank" rel="noopener noreferrer" className="block px-8 py-2 ">
+        <span className="cursor-pointer rounded-full border border-foreground/50 text-sm text-foreground/50 hover:border-foreground/80 hover:text-foreground/80">
+          <a
+            href={props.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block px-8 py-2"
+          >
             official
           </a>
         </span>
       </header>
       <section className="flex flex-col gap-8 px-4 pt-8 pb-4">
-        <span className="text-2xl font-mono font-light truncate translate-y-1/2">
-          <Tooltip>
-            <TooltipTrigger>
-              {props.name}
-            </TooltipTrigger>
-            <TooltipContent side="bottom">
-              {props.name}
-            </TooltipContent>
-          </Tooltip>
+        <span className="translate-y-1/2 truncate font-mono text-2xl font-light">
+          {props.name}
         </span>
-        <span className="relative text-left text-sm text-wrap wrap-anywhere group">
-          <span className="text-card-foreground/50 group-hover:invisible">
-            {'*'.repeat(126)}
+        <span className="group relative text-left text-sm text-wrap wrap-anywhere">
+          <span
+            className="block max-h-[calc(1.5em*3)] overflow-hidden text-foreground/50 group-hover:invisible"
+            style={{
+              lineHeight: '1.5em',
+            }}
+          >
+            {'*'.repeat(128)}
           </span>
-          <span onClick={copyPluginLicense} className="invisible absolute left-0 top-0 flex items-center justify-center size-full rounded-full font-light text-card-foreground/80 group-hover:visible group-hover:bg-card-foreground/10">
+          <span
+            onClick={copyPluginLicense}
+            className="invisible absolute top-0 left-0 flex size-full items-center justify-center rounded-full font-light text-foreground/80 group-hover:visible group-hover:bg-foreground/30"
+          >
             Copy to clipboard
           </span>
         </span>

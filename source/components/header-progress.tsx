@@ -1,9 +1,17 @@
-import { Progress } from '@/components/shadcn/progress';
 import { useProgress } from '@/hooks/use-progress';
-import { cn } from '@/utils/shadcn';
+import { cn } from '@/utils/utils';
 
 export function HeaderProgress({ className }: React.ComponentProps<'div'>) {
   const progress = useProgress();
 
-  return <Progress value={progress} className={cn('h-0.5 rounded-none', className)} />;
+  return (
+    <div className={cn('h-0.5 w-full bg-foreground/20', className)}>
+      <div className="relative size-full overflow-hidden bg-transparent">
+        <div
+          style={{ transform: `translateX(-${100 - (progress || 0)}%)` }}
+          className="size-full flex-1 bg-foreground/80 transition-all"
+        />
+      </div>
+    </div>
+  );
 }

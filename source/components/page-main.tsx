@@ -43,7 +43,7 @@ export function PageMain() {
   if (response.isError) return <PageError />;
 
   return (
-    <main className="grid grid-cols-[repeat(auto-fill,_minmax(min(20rem,_100%),_1fr))] justify-items-center content-center px-6 py-10 gap-14">
+    <main className="grid grid-cols-[repeat(auto-fill,_minmax(min(20rem,_100%),_1fr))] content-center justify-items-center gap-14 px-4 py-10">
       {response.data.ides.map(item => <CardIDE key={item.code} {...item} />)}
       {response.data.plugins.map(item => <CardPlugin key={item.code} {...item} />)}
     </main>

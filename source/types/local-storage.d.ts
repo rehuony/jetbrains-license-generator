@@ -1,5 +1,15 @@
 type ThemeUnion = 'system' | 'dark' | 'light';
 
+interface DisclaimerState {
+  isAgree: boolean;
+  setIsAgree: (isAgree: DisclaimerState['isAgree']) => void;
+}
+
+interface SettingState {
+  isSetting: boolean;
+  setIsSetting: (isShow: SettingState['isSetting']) => void;
+}
+
 interface ThemeState {
   theme: ThemeUnion;
   setTheme: (theme: ThemeState['theme']) => void;
