@@ -1,8 +1,8 @@
 type ThemeUnion = 'system' | 'dark' | 'light';
 
 interface DisclaimerState {
-  isAgree: boolean;
-  setIsAgree: (isAgree: DisclaimerState['isAgree']) => void;
+  isDisclaim: boolean;
+  setIsDisclaim: (isDisclaim: DisclaimerState['isDisclaim']) => void;
 }
 
 interface SettingState {

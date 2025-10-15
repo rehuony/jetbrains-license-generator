@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect } from 'react';
+import { DialogDisclaimer } from '@/components/dialog-disclaimer';
 import { DialogSetting } from '@/components/dialog-setting';
 import { PageHeader } from '@/components/page-header';
 import { PageMain } from '@/components/page-main';
@@ -9,6 +10,7 @@ const queryClient = new QueryClient();
 
 export function App() {
   const isSetting = useLocalStorage(state => state.isSetting);
+  const isDisclaim = useLocalStorage(state => state.isDisclaim);
   const setIsSetting = useLocalStorage(state => state.setIsSetting);
 
   useEffect(() => {
@@ -21,6 +23,7 @@ export function App() {
         <PageHeader />
         <PageMain />
         {isSetting && <DialogSetting />}
+        {isDisclaim && <DialogDisclaimer />}
       </div>
     </QueryClientProvider>
   );

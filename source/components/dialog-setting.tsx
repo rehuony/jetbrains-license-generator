@@ -48,7 +48,9 @@ export function DialogSetting() {
       className="fixed top-1/2 left-1/2 w-[min(90%,600px)] -translate-x-1/2 -translate-y-1/2 rounded-xl p-6 shadow-xl select-none backdrop:bg-foreground/30 backdrop:backdrop-blur-md"
     >
       <header className="flex flex-col gap-4 p-4">
-        <h2 className="text-center font-mono text-2xl font-bold">Personalize Information</h2>
+        <h2 className="text-center font-mono text-2xl font-bold">
+          Personalize Information
+        </h2>
         <p className="font-mono text-sm leading-6 font-light">
           Set personal information for the product license here,
           which could be useful for some users.
@@ -58,7 +60,6 @@ export function DialogSetting() {
       <form
         method="dialog"
         className="flex flex-col gap-4"
-        onSubmit={handleSaveChange}
       >
         <div className="grid grid-cols-4 items-center gap-2">
           <label htmlFor="email" className="col-span-1 text-right font-mono">Email:</label>
@@ -103,7 +104,8 @@ export function DialogSetting() {
             Cancel
           </button>
           <button
-            type="submit"
+            type="button"
+            onClick={handleSaveChange}
             className="w-48 cursor-pointer rounded-xl bg-foreground/40 px-4 py-3 font-mono shadow shadow-foreground/40 hover:bg-foreground/60"
           >
             Save Setting

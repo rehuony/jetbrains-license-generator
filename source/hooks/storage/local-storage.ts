@@ -8,8 +8,8 @@ export const localStorage = create<LocalState>()(
     set => ({
       text: '',
       theme: 'system',
-      isAgree: false,
       isSetting: false,
+      isDisclaim: true,
       setText: (text) => {
         set((state) => {
           state.text = text;
@@ -20,14 +20,14 @@ export const localStorage = create<LocalState>()(
           state.theme = theme;
         });
       },
-      setIsAgree: (isAgree) => {
-        set((state) => {
-          state.isAgree = isAgree;
-        });
-      },
       setIsSetting: (isSetting) => {
         set((state) => {
           state.isSetting = isSetting;
+        });
+      },
+      setIsDisclaim: (isDisclaim) => {
+        set((state) => {
+          state.isDisclaim = isDisclaim;
         });
       },
     }),

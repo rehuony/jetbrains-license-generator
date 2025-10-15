@@ -3,7 +3,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 0.6rem;
 }
 
 ::-webkit-scrollbar-track {
