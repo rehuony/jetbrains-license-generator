@@ -5,6 +5,11 @@ interface DisclaimerState {
   setIsDisclaim: (isDisclaim: DisclaimerState['isDisclaim']) => void;
 }
 
+interface QuestionState {
+  isQuestion: boolean;
+  setIsQuestion: (isShow: QuestionState['isQuestion']) => void;
+}
+
 interface SettingState {
   isSetting: boolean;
   setIsSetting: (isShow: SettingState['isSetting']) => void;

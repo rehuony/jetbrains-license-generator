@@ -1,16 +1,16 @@
 import { useEffect, useRef } from 'react';
 import { useLocalStorage } from '@/hooks/use-storage';
 
-export function DialogDisclaimer() {
+export function DialogQuestion() {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const isDisclaim = useLocalStorage(state => state.isDisclaim);
-  const setIsDisclaim = useLocalStorage(state => state.setIsDisclaim);
+  const isQuestion = useLocalStorage(state => state.isQuestion);
+  const setIsQuestion = useLocalStorage(state => state.setIsQuestion);
 
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
 
-    if (isDisclaim) {
+    if (isQuestion) {
       dialog.showModal();
       document.body.classList.add('overflow-hidden');
     } else {
@@ -21,30 +21,7 @@ export function DialogDisclaimer() {
     return () => {
       document.body.classList.remove('overflow-hidden');
     };
-  }, [isDisclaim]);
-
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) return;
-
-    const preventScroll = () => {
-      if (dialog.scrollTop > 0) dialog.scrollTop = 0;
-    };
-    preventScroll();
-
-    const preventBackdrop = (e: Event) => {
-      if (isDisclaim) {
-        e.preventDefault();
-        dialog.showModal();
-        preventScroll();
-      }
-    };
-
-    dialog.addEventListener('close', preventBackdrop);
-    return () => {
-      dialog.removeEventListener('close', preventBackdrop);
-    };
-  }, [isDisclaim]);
+  }, [isQuestion]);
 
   return (
     <dialog
@@ -53,7 +30,7 @@ export function DialogDisclaimer() {
     >
       <header className="mb-4 flex flex-col gap-4 text-center">
         <h2 className="font-mono text-3xl font-bold tracking-wide">
-          DISCLAIMER
+          Tutorial
         </h2>
         <p className="text-sm font-light opacity-70">
           <span className="pr-2 font-bold">
@@ -124,7 +101,7 @@ export function DialogDisclaimer() {
       <footer className="mt-8 flex w-full items-center justify-center">
         <button
           type="button"
-          onClick={() => setIsDisclaim(false)}
+          onClick={() => setIsQuestion(false)}
           className="rounded-lg bg-foreground/15 px-6 py-3 font-mono text-sm font-medium shadow-md shadow-foreground/20 transition-all hover:scale-[1.02] hover:bg-foreground/25 active:scale-[0.98]"
         >
           Agree to the terms above

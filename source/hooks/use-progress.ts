@@ -18,6 +18,7 @@ function calcScrollProgress(): number {
 }
 
 export function useProgress(): number {
+  // TODO: Fixed issues caused by window height changes
   const [progress, setProgress] = useState<number>(() => {
     if (typeof window === 'undefined') return 0;
 

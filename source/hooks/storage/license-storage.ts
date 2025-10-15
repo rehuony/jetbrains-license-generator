@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { storageMiddleware } from '@/hooks/use-storage';
-import { getExpiryDate } from '@/utils/utils';
+import { getExpiryDate } from '@/utils/license';
 
 export const licenseStorage = create<LicenseState>()(
   storageMiddleware(

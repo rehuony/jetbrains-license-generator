@@ -2,9 +2,10 @@ import clipboard from 'clipboardy';
 import forge from 'node-forge';
 import { useCallback } from 'react';
 import { useCertificateStorage, useLicenseStorage, useLocalStorage } from '@/hooks/use-storage';
-import { cn, convertPemToString, generateLicenseId, isProductMatch } from '@/utils/utils';
+import { convertPemToString, generateLicenseId } from '@/utils/license';
+import { cn, isProductMatch } from '@/utils/utils';
 
-export function CardIDE(props: IDEDataItem) {
+export function CardProduct(props: IDEDataItem | PluginDataItem) {
   const text = useLocalStorage(state => state.text);
   const email = useLicenseStorage(state => state.email);
   const username = useLicenseStorage(state => state.username);
@@ -12,7 +13,7 @@ export function CardIDE(props: IDEDataItem) {
   const publicPem = useCertificateStorage(state => state.publicPem);
   const privatePem = useCertificateStorage(state => state.privatePem);
 
-  const copyIDELicense = useCallback(async () => {
+  const copyProductLicense = useCallback(async () => {
     const licenseId = generateLicenseId();
     const productInfo = Array.from(props.code.split(',')).map((code) => {
       return {
@@ -48,9 +49,10 @@ export function CardIDE(props: IDEDataItem) {
     const sigResultsBase64 = forge.util.encode64(signatureBytes);
 
     const publicPemString = convertPemToString(publicPem);
-    const ideLicense = `${licenseId}-${licensePartBase64}-${sigResultsBase64}-${publicPemString}`;
 
-    await clipboard.write(ideLicense);
+    const pluginLicense = `${licenseId}-${licensePartBase64}-${sigResultsBase64}-${publicPemString}`;
+
+    await clipboard.write(pluginLicense);
     // toast(`successfully copy ${props.name}'s license`);
   }, [email, expiryDate, privatePem, props.code, publicPem, username]);
 
@@ -89,7 +91,7 @@ export function CardIDE(props: IDEDataItem) {
             {'*'.repeat(128)}
           </span>
           <span
-            onClick={copyIDELicense}
+            onClick={copyProductLicense}
             className="invisible absolute top-0 left-0 flex size-full items-center justify-center rounded-full font-light text-foreground/80 group-hover:visible group-hover:bg-foreground/30"
           >
             Copy to clipboard

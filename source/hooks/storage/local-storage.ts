@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { storageMiddleware } from '@/hooks/use-storage';
 
-type LocalState = DisclaimerState & SettingState & ThemeState & SearchState;
+type LocalState = DisclaimerState & QuestionState & SettingState & ThemeState & SearchState;
 
 export const localStorage = create<LocalState>()(
   storageMiddleware(
@@ -9,6 +9,7 @@ export const localStorage = create<LocalState>()(
       text: '',
       theme: 'system',
       isSetting: false,
+      isQuestion: false,
       isDisclaim: true,
       setText: (text) => {
         set((state) => {
@@ -23,6 +24,11 @@ export const localStorage = create<LocalState>()(
       setIsSetting: (isSetting) => {
         set((state) => {
           state.isSetting = isSetting;
+        });
+      },
+      setIsQuestion: (isQuestion) => {
+        set((state) => {
+          state.isQuestion = isQuestion;
         });
       },
       setIsDisclaim: (isDisclaim) => {
