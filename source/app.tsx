@@ -5,6 +5,7 @@ import { DialogSetting } from '@/components/dialog-setting';
 import { PageHeader } from '@/components/page-header';
 import { PageMain } from '@/components/page-main';
 import { useLocalStorage } from '@/hooks/use-storage';
+import { PageFooter } from './components/page-footer';
 
 const queryClient = new QueryClient();
 
@@ -19,9 +20,10 @@ export function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex min-h-dvh flex-col">
+      <div className="relative flex min-h-dvh flex-col">
         <PageHeader />
         <PageMain />
+        <PageFooter />
         {isSetting && <DialogSetting />}
         {isDisclaim && <DialogDisclaimer />}
       </div>

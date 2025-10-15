@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { CardIDE } from '@/components/card-ide';
 import { CardPlugin } from '@/components/card-plugin';
-import { PageError } from '@/components/page-error';
-import { PagePending } from '@/components/page-pending';
+import { MainError } from '@/components/main-error';
+import { MainPending } from '@/components/main-pending';
 import { useCertificateStorage } from '@/hooks/use-storage';
 
 export function PageMain() {
@@ -38,9 +38,9 @@ export function PageMain() {
   });
 
   // Network request loading
-  if (response.isPending) return <PagePending />;
+  if (response.isPending) return <MainPending />;
   // An exception occurred when requesting data
-  if (response.isError) return <PageError />;
+  if (response.isError) return <MainError />;
 
   return (
     <main className="grid grid-cols-[repeat(auto-fill,_minmax(min(20rem,_100%),_1fr))] content-center justify-items-center gap-14 px-4 py-10">
