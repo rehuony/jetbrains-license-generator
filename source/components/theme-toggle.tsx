@@ -8,39 +8,27 @@ export function ThemeToggle() {
   const setTheme = useLocalStorage(state => state.setTheme);
 
   return (
-    <div className="relative inline-grid grid-cols-3 rounded-full bg-foreground/15">
+    <div className='relative inline-grid grid-cols-3 rounded-full bg-foreground/15'>
+      {/* light theme */}
       <ButtonIcon
+        className={cn('bg-transparent p-2.5', (theme === 'light' ? `bg-foreground/30` : ''))}
         onClick={() => setTheme('light')}
-        className={cn('bg-transparent', (theme === 'light' ? `bg-foreground/30` : ''))}
       >
-        <Sun
-          size={48}
-          strokeWidth={4}
-          absoluteStrokeWidth
-          className="size-5 text-foreground"
-        />
+        <Sun className='size-4 text-foreground' />
       </ButtonIcon>
+      {/* system theme */}
       <ButtonIcon
+        className={cn('bg-transparent p-0.5', (theme === 'system' ? `bg-foreground/30` : ''))}
         onClick={() => setTheme('system')}
-        className={cn('bg-transparent', (theme === 'system' ? `bg-foreground/30` : ''))}
       >
-        <Monitor
-          size={48}
-          strokeWidth={4}
-          absoluteStrokeWidth
-          className="size-5 text-foreground"
-        />
+        <Monitor className='size-4 text-foreground' />
       </ButtonIcon>
+      {/* dark theme */}
       <ButtonIcon
+        className={cn('bg-transparent p-0.5', (theme === 'dark' ? `bg-foreground/30` : ''))}
         onClick={() => setTheme('dark')}
-        className={cn('bg-transparent', (theme === 'dark' ? `bg-foreground/30` : ''))}
       >
-        <Moon
-          size={48}
-          strokeWidth={4}
-          absoluteStrokeWidth
-          className="size-5 text-foreground"
-        />
+        <Moon className='size-4 text-foreground' />
       </ButtonIcon>
     </div>
   );

@@ -2,23 +2,6 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-::-webkit-scrollbar {
-  width: 0.6rem;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: rgba(120, 120, 120, 0.3);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(120, 120, 120, 0.5);
-}
-
 :root {
   --foreground: oklch(11.111% 0.1111 111.11);
 }
@@ -31,12 +14,21 @@
   --color-foreground: var(--foreground);
 }
 
-@layer conponents {
+@layer base {
   html {
     scrollbar-gutter: stable;
   }
-
-  body {
-    @apply bg-foreground/10 text-foreground;
+  ::-webkit-scrollbar {
+    width: 0.6rem;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(120, 120, 120, 0.3);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(120, 120, 120, 0.5);
   }
 }

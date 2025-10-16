@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { useLicenseStorage, useLocalStorage } from '@/hooks/use-storage';
+import { dialogSettingId } from '@/constants/dialog';
+import { useLicenseStorage } from '@/hooks/use-storage';
+import { closeDialog } from '@/utils/dialog';
 
 export function DialogSetting() {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const isSetting = useLocalStorage(state => state.isSetting);
-  const setIsSetting = useLocalStorage(state => state.setIsSetting);
-
   const email = useLicenseStorage(state => state.email);
   const username = useLicenseStorage(state => state.username);
   const expiryDate = useLicenseStorage(state => state.expiryDate);
@@ -18,97 +17,117 @@ export function DialogSetting() {
   const [localUsername, setLocalUsername] = useState(username);
   const [localExpiryDate, setLocalExpiryDate] = useState(expiryDate);
 
+  const handleSaveChange = () => {
+    setEmail(localEmail);
+    setUsername(localUsername);
+    setExpiryDate(localExpiryDate);
+    closeDialog(dialogSettingId);
+  };
+
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
 
-    if (isSetting) {
-      dialog.showModal();
+    const handleShowModal = () => {
+      dialog.focus({ preventScroll: true });
       document.body.classList.add('overflow-hidden');
-    } else {
-      dialog.close();
-      document.body.classList.remove('overflow-hidden');
-    }
+    };
 
-    return () => {
+    const handleCloseModal = () => {
       document.body.classList.remove('overflow-hidden');
     };
-  }, [isSetting]);
 
-  const handleSaveChange = () => {
-    setIsSetting(false);
-    setEmail(localEmail);
-    setUsername(localUsername);
-    setExpiryDate(localExpiryDate);
-  };
+    const observer = new MutationObserver(() => {
+      if (dialog.open) handleShowModal();
+      else handleCloseModal();
+    });
+    observer.observe(dialog, { attributes: true, attributeFilter: ['open'] });
+
+    dialog.addEventListener('close', handleCloseModal);
+    return () => {
+      dialog.removeEventListener('close', handleCloseModal);
+      observer.disconnect();
+    };
+  }, []);
 
   return (
     <dialog
       ref={dialogRef}
-      className="fixed top-1/2 left-1/2 w-[min(90%,600px)] -translate-x-1/2 -translate-y-1/2 rounded-xl p-6 shadow-xl select-none backdrop:bg-foreground/30 backdrop:backdrop-blur-md"
+      className='fixed top-1/2 left-1/2 max-h-[85dvh] w-[min(90%,_50rem)] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl p-8 text-foreground shadow-2xl select-none [scrollbar-width:none] backdrop:bg-black/40 backdrop:backdrop-blur-md focus:outline-none [&::-webkit-scrollbar]:w-0'
+      id={dialogSettingId}
     >
-      <header className="flex flex-col gap-4 p-4">
-        <h2 className="text-center font-mono text-2xl font-bold">
+      <header className='flex flex-col gap-4 p-4 font-mono'>
+        <h2 className='text-center text-2xl font-bold'>
           Personalize Information
         </h2>
-        <p className="font-mono text-sm leading-6 font-light">
-          Set personal information for the product license here,
-          which could be useful for some users.
+        <p className='text-center text-sm leading-6 font-light'>
+          Personalize information for the product license, which could be useful for someone.
         </p>
       </header>
-
-      <form
-        method="dialog"
-        className="flex flex-col gap-4"
-      >
-        <div className="grid grid-cols-4 items-center gap-2">
-          <label htmlFor="email" className="col-span-1 text-right font-mono">Email:</label>
+      <form className='flex flex-col gap-4 font-mono'>
+        <div className='grid grid-cols-4 items-center gap-2'>
+          <label
+            className='col-span-1 text-right'
+            htmlFor='email'
+          >
+            Email:
+          </label>
           <input
-            id="email"
-            name="email"
+            autoComplete='off'
+            className='col-span-3 rounded-md border border-foreground/20 p-2'
             defaultValue={email}
-            className="col-span-3 rounded-md border border-foreground/20 p-2 font-mono"
+            id='email'
+            name='email'
             onChange={event => setLocalEmail(event.target.value)}
           />
         </div>
-
-        <div className="grid grid-cols-4 items-center gap-2">
-          <label htmlFor="username" className="col-span-1 text-right font-mono">Username:</label>
+        <div className='grid grid-cols-4 items-center gap-2'>
+          <label
+            className='col-span-1 text-right'
+            htmlFor='username'
+          >
+            Username:
+          </label>
           <input
-            id="username"
-            name="username"
+            autoComplete='off'
+            className='col-span-3 rounded-md border border-foreground/20 p-2'
             defaultValue={username}
-            className="col-span-3 rounded-md border border-foreground/20 p-2 font-mono"
+            id='username'
+            name='username'
             onChange={event => setLocalUsername(event.target.value)}
           />
         </div>
-
-        <div className="grid grid-cols-4 items-center gap-2">
-          <label htmlFor="expiry" className="col-span-1 text-right font-mono">Expiry Date:</label>
+        <div className='grid grid-cols-4 items-center gap-2'>
+          <label
+            className='col-span-1 text-right'
+            htmlFor='expiry'
+          >
+            Expiry Date:
+          </label>
           <input
-            id="expiry"
-            type="date"
-            name="expiry"
+            autoComplete='off'
+            className='col-span-3 rounded-md border border-foreground/20 p-2'
             defaultValue={expiryDate}
-            className="col-span-3 rounded-md border border-foreground/20 p-2 font-mono"
+            id='expiry'
+            name='expiry'
             onChange={event => setLocalExpiryDate(event.target.value)}
+            type='date'
           />
         </div>
-
-        <footer className="flex items-center justify-between p-2 px-12">
+        <footer className='flex items-center justify-between gap-4 p-2 px-8 font-mono'>
           <button
-            type="button"
-            onClick={() => setIsSetting(false)}
-            className="w-48 cursor-pointer rounded-xl bg-foreground/20 px-4 py-3 font-mono shadow shadow-foreground/30 hover:bg-foreground/40"
+            className='w-[max(25%,_8rem)] cursor-pointer rounded-xl bg-foreground/20 px-4 py-3 shadow shadow-foreground/30 hover:bg-foreground/40'
+            onClick={() => closeDialog(dialogSettingId)}
+            type='button'
           >
             Cancel
           </button>
           <button
-            type="button"
+            className='w-[max(25%,_8rem)] cursor-pointer rounded-xl bg-foreground/40 px-4 py-3 shadow shadow-foreground/40 hover:bg-foreground/60'
             onClick={handleSaveChange}
-            className="w-48 cursor-pointer rounded-xl bg-foreground/40 px-4 py-3 font-mono shadow shadow-foreground/40 hover:bg-foreground/60"
+            type='button'
           >
-            Save Setting
+            Save
           </button>
         </footer>
       </form>
