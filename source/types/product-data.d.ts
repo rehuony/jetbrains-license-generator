@@ -55,6 +55,7 @@ interface PluginDataJSON {
 
 interface CertificateDataJSON {
   conf: string;
+  vmoptions: string;
   publicPem: string;
   privatePem: string;
 }

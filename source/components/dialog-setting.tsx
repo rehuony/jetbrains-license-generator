@@ -59,19 +59,19 @@ export function DialogSetting() {
           <label className='col-span-1 text-right' htmlFor='email'>
             Email:
           </label>
-          <input autoComplete='off' className='col-span-3 rounded-md border border-foreground/20 p-2' defaultValue={email} id='email' name='email' onChange={event => setLocalEmail(event.target.value)} />
+          <input autoComplete='off' className='col-span-3 w-full rounded-md border border-foreground/20 p-2' defaultValue={email} id='email' name='email' onChange={event => setLocalEmail(event.target.value)} />
         </div>
         <div className='grid grid-cols-4 items-center gap-2'>
           <label className='col-span-1 text-right' htmlFor='username'>
             Username:
           </label>
-          <input autoComplete='off' className='col-span-3 rounded-md border border-foreground/20 p-2' defaultValue={username} id='username' name='username' onChange={event => setLocalUsername(event.target.value)} />
+          <input autoComplete='off' className='col-span-3 w-full rounded-md border border-foreground/20 p-2' defaultValue={username} id='username' name='username' onChange={event => setLocalUsername(event.target.value)} />
         </div>
         <div className='grid grid-cols-4 items-center gap-2'>
           <label className='col-span-1 text-right' htmlFor='expiry'>
             Expiry Date:
           </label>
-          <input autoComplete='off' className='col-span-3 rounded-md border border-foreground/20 p-2' defaultValue={expiryDate} id='expiry' name='expiry' onChange={event => setLocalExpiryDate(event.target.value)} type='date' />
+          <input autoComplete='off' className='col-span-3 w-full rounded-md border border-foreground/20 p-2' defaultValue={expiryDate} id='expiry' name='expiry' onChange={event => setLocalExpiryDate(event.target.value)} type='date' />
         </div>
         <footer className='flex items-center justify-between gap-4 p-2 px-8 font-mono'>
           <button className='w-[max(25%,_8rem)] cursor-pointer rounded-xl bg-foreground/20 px-4 py-3 shadow shadow-foreground/30 hover:bg-foreground/40'

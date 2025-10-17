@@ -22,3 +22,10 @@ export const parallelismNumber = availableParallelism();
 
 // Visiting https://www.jetbrains.com/products/ for resource sniffing.
 export const ideProductCodes = ['CL', 'DC', 'DG', 'DM', 'DP', 'DS', 'GO', 'IIU', 'PCP', 'PS', 'RC', 'RD', 'RM', 'RR', 'RS', 'TC', 'WS'];
+
+// Define the java vmoptions of the product
+export const productVMOptions = `
+-javaagent:/path/to/ja-netfilter/ja-netfilter.jar=jetbrains
+--add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED
+--add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED
+`;

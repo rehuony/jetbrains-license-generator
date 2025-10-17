@@ -1,4 +1,4 @@
-import { certificateDataPath, filterRegexp, ideDataPath, pluginDataPath, privatePemPath, publicPemPath, rootPemPath } from './config/config.js';
+import { certificateDataPath, filterRegexp, ideDataPath, pluginDataPath, privatePemPath, productVMOptions, publicPemPath, rootPemPath } from './config/config.js';
 import { generateIDEData } from './library/fetch-ide-data.js';
 import { generatePluginData } from './library/fetch-plugin-data.js';
 import { generateCertificate, generateCertificateConf } from './library/generate-certificate.js';
@@ -36,6 +36,7 @@ await checkIsPathExist([certificateDataPath], async () => {
 
   await persistDataToFile(JSON.stringify({
     conf: await generateCertificateConf(rootPem, publicPem),
+    vmoptions: productVMOptions.trim(),
     publicPem: publicPem.trim(),
     privatePem: privatePem.trim(),
   }, null, 2).replaceAll(filterRegexp, ''), certificateDataPath);

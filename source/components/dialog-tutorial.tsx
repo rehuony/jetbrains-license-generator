@@ -1,9 +1,13 @@
 import { useEffect, useRef } from 'react';
+import { CodeViewport } from '@/components/code-viewport';
 import { dialogTutorialId } from '@/constants/dialog';
+import { useCertificateStorage } from '@/hooks/use-storage';
 import { closeDialog } from '@/utils/dialog';
 
 export function DialogTutorial() {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const powerConf = useCertificateStorage(state => state.conf);
+  const vmOptions = useCertificateStorage(state => state.vmoptions);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -67,9 +71,7 @@ export function DialogTutorial() {
               matches the configuration provided on this website. If the values differ for any reason,
               replace the original content with the following:
             </span>
-            <span className='block select-text'>
-              xxxxxxxxxxxxxxxxxx
-            </span>
+            <CodeViewport code={powerConf} language='power.conf' />
           </li>
           <li>
             <span className='pr-2 font-semibold'>Modify VM Options:</span>
@@ -78,13 +80,7 @@ export function DialogTutorial() {
               Edit the corresponding VM options file, such as clion.vmoptions, and append the following
               lines:
             </span>
-            <code className='block select-text'>
-              -javaagent:/path/to/ja-netfilter.jar=jetbrains
-              <br />
-              --add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED
-              <br />
-              --add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED
-            </code>
+            <CodeViewport code={vmOptions} language='clion.vmoptions' />
           </li>
           <li>
             <span className='pr-2 font-semibold'>Activate Product License:</span>

@@ -6,6 +6,7 @@ import { useCertificateStorage } from '@/hooks/use-storage';
 
 export function PageMain() {
   const setConf = useCertificateStorage(state => state.setConf);
+  const setVMOptions = useCertificateStorage(state => state.setVMOptions);
   const setPublicPem = useCertificateStorage(state => state.setPublicPem);
   const setPrivatePem = useCertificateStorage(state => state.setPrivatePem);
 
@@ -23,6 +24,7 @@ export function PageMain() {
       if (certificateData === null) throw new Error('failed to fetch certificate-data.json');
 
       setConf(certificateData.conf);
+      setVMOptions(certificateData.vmoptions);
       setPublicPem(certificateData.publicPem);
       setPrivatePem(certificateData.privatePem);
 
@@ -41,7 +43,7 @@ export function PageMain() {
   if (response.isError) return <MainError />;
 
   return (
-    <main className='grid grid-cols-[repeat(auto-fill,_minmax(min(20rem,_100%),_1fr))] content-center justify-items-center gap-14 px-4 py-10'>
+    <main className='grid grid-cols-[repeat(auto-fill,_minmax(min(20rem,_100%),_1fr))] content-center justify-items-center gap-14 px-6 py-10'>
       {response.data.ides.map(item => (
         <CardProduct key={item.code} {...item} />
       ))}

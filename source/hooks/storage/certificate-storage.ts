@@ -5,11 +5,17 @@ export const certificateStorage = create<CertificateState>()(
   storageMiddleware(
     set => ({
       conf: '',
+      vmoptions: '',
       publicPem: '',
       privatePem: '',
       setConf: (conf) => {
         set((state) => {
           state.conf = conf;
+        });
+      },
+      setVMOptions: (vmoptions) => {
+        set((state) => {
+          state.vmoptions = vmoptions;
         });
       },
       setPublicPem: (publicPem) => {
