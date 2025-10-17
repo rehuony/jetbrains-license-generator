@@ -6,7 +6,7 @@ function calcScrollProgress(): number {
   const totalContentHeight = document.documentElement.scrollHeight;
   const maxScrollDistance = totalContentHeight - viewHeight;
 
-  if (maxScrollDistance <= 0) {
+  if (maxScrollDistance < 0) {
     return 100;
   }
 
@@ -14,11 +14,10 @@ function calcScrollProgress(): number {
 
   progress = Math.max(0, Math.min(100, progress));
 
-  return Math.ceil(progress);
+  return Number(progress.toFixed(3));
 }
 
 export function useProgress(): number {
-  // TODO: Fixed issues caused by window height changes
   const [progress, setProgress] = useState<number>(() => {
     if (typeof window === 'undefined') return 0;
 
