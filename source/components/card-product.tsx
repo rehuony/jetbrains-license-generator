@@ -65,20 +65,10 @@ export function CardProduct(props: IDEDataItem | PluginDataItem) {
     <article className={cn(`w-5/6 rounded-xl bg-foreground/10 shadow-xl ring shadow-foreground/20 ring-foreground/10 duration-300 select-none hover:-translate-y-1`, isProductMatch(props.name, text) ? '' : `hidden`)}>
       <header className='flex items-center justify-between border-b-1 px-4'>
         <span className='size-16 translate-y-1/2'>
-          <img
-            alt={`${props.name}'s logo`}
-            className='pointer-events-none size-full min-h-16 min-w-16'
-            loading='lazy'
-            src={props.icon}
-          />
+          <img alt={`${props.name}'s logo`} className='pointer-events-none size-full min-h-16 min-w-16' loading='lazy' src={props.icon} />
         </span>
         <span className='cursor-pointer rounded-full border border-foreground/50 text-sm text-foreground/50 hover:border-foreground/80 hover:text-foreground/80'>
-          <a
-            className='block px-8 py-2'
-            href={props.link}
-            rel='noopener noreferrer'
-            target='_blank'
-          >
+          <a className='block px-8 py-2' href={props.link} rel='noopener noreferrer' target='_blank'>
             official
           </a>
         </span>
@@ -88,16 +78,10 @@ export function CardProduct(props: IDEDataItem | PluginDataItem) {
           {props.name}
         </span>
         <span className='group relative text-left text-sm text-wrap wrap-anywhere'>
-          <span
-            className='block max-h-[calc(1.5em*3)] overflow-hidden text-foreground/50 group-hover:invisible'
-            style={{ lineHeight: '1.5em' }}
-          >
+          <span className='block max-h-[calc(1.5em*3)] overflow-hidden text-foreground/50 group-hover:invisible' style={{ lineHeight: '1.5em' }}>
             {'*'.repeat(128)}
           </span>
-          <span
-            className='invisible absolute top-0 left-0 flex size-full cursor-pointer items-center justify-center rounded-full font-light text-foreground/80 group-hover:visible group-hover:bg-foreground/30'
-            onClick={copyProductLicense}
-          >
+          <span className='invisible absolute top-0 left-0 flex size-full cursor-pointer items-center justify-center rounded-full font-light text-foreground/80 group-hover:visible group-hover:bg-foreground/30' onClick={copyProductLicense}>
             Copy to clipboard
           </span>
         </span>

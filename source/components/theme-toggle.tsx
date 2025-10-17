@@ -10,24 +10,15 @@ export function ThemeToggle() {
   return (
     <div className='relative inline-grid grid-cols-3 rounded-full bg-foreground/15'>
       {/* light theme */}
-      <ButtonIcon
-        className={cn('bg-transparent p-2.5', (theme === 'light' ? `bg-foreground/30` : ''))}
-        onClick={() => setTheme('light')}
-      >
+      <ButtonIcon className={cn('bg-transparent p-2.5', (theme === 'light' ? `bg-foreground/30` : ''))} onClick={() => setTheme('light')}>
         <Sun className='size-4 text-foreground' />
       </ButtonIcon>
       {/* system theme */}
-      <ButtonIcon
-        className={cn('bg-transparent p-0.5', (theme === 'system' ? `bg-foreground/30` : ''))}
-        onClick={() => setTheme('system')}
-      >
+      <ButtonIcon className={cn('bg-transparent p-0.5', (theme === 'system' ? `bg-foreground/30` : ''))} onClick={() => setTheme('system')}>
         <Monitor className='size-4 text-foreground' />
       </ButtonIcon>
       {/* dark theme */}
-      <ButtonIcon
-        className={cn('bg-transparent p-0.5', (theme === 'dark' ? `bg-foreground/30` : ''))}
-        onClick={() => setTheme('dark')}
-      >
+      <ButtonIcon className={cn('bg-transparent p-0.5', (theme === 'dark' ? `bg-foreground/30` : ''))} onClick={() => setTheme('dark')}>
         <Moon className='size-4 text-foreground' />
       </ButtonIcon>
     </div>

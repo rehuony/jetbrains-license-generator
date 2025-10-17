@@ -32,11 +32,7 @@ export function DialogTutorial() {
   }, []);
 
   return (
-    <dialog
-      ref={dialogRef}
-      className='fixed top-1/2 left-1/2 max-h-[85dvh] w-[min(90%,_80rem)] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl p-8 text-foreground shadow-2xl select-none [scrollbar-width:none] backdrop:bg-black/40 backdrop:backdrop-blur-md focus:outline-none [&::-webkit-scrollbar]:w-0'
-      id={dialogTutorialId}
-    >
+    <dialog ref={dialogRef} className='fixed top-1/2 left-1/2 max-h-[85dvh] w-[min(90%,_80rem)] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl p-8 text-foreground shadow-2xl select-none [scrollbar-width:none] backdrop:bg-black/40 backdrop:backdrop-blur-md focus:outline-none [&::-webkit-scrollbar]:w-0' id={dialogTutorialId}>
       <header className='mb-4 flex flex-col gap-4 text-center font-mono'>
         <h2 className='text-3xl font-bold tracking-wide'>
           Tutorial
@@ -107,11 +103,7 @@ export function DialogTutorial() {
         </ol>
       </form>
       <footer className='mt-8 flex w-full items-center justify-center font-mono'>
-        <button
-          className='w-[max(25%,_8rem)] cursor-pointer rounded-lg bg-foreground/15 px-6 py-3 text-sm font-medium shadow-md shadow-foreground/20 transition-all hover:scale-[1.02] hover:bg-foreground/25 active:scale-[0.98]'
-          onClick={() => closeDialog(dialogTutorialId)}
-          type='button'
-        >
+        <button className='w-[max(25%,_8rem)] cursor-pointer rounded-lg bg-foreground/15 px-6 py-3 text-sm font-medium shadow-md shadow-foreground/20 transition-all hover:scale-[1.02] hover:bg-foreground/25 active:scale-[0.98]' onClick={() => closeDialog(dialogTutorialId)} type='button'>
           Close This Page
         </button>
       </footer>

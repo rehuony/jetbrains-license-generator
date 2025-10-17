@@ -43,16 +43,10 @@ export function PageMain() {
   return (
     <main className='grid grid-cols-[repeat(auto-fill,_minmax(min(20rem,_100%),_1fr))] content-center justify-items-center gap-14 px-4 py-10'>
       {response.data.ides.map(item => (
-        <CardProduct
-          key={item.code}
-          {...item}
-        />
+        <CardProduct key={item.code} {...item} />
       ))}
       {response.data.plugins.map(item => (
-        <CardProduct
-          key={item.code}
-          {...item}
-        />
+        <CardProduct key={item.code} {...item} />
       ))}
     </main>
   );

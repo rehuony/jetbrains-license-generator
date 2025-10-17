@@ -25,7 +25,7 @@ export default antfu(
     rules: {
       'antfu/if-newline': 'off',
       'style/brace-style': ['error', '1tbs'],
-      'style/jsx-first-prop-new-line': ['error', 'multiprop'],
+      'style/jsx-first-prop-new-line': ['error', 'never'],
       'style/jsx-max-props-per-line': ['error', { maximum: 1, when: 'multiline' }],
       'style/jsx-quotes': ['error', 'prefer-single'],
       'style/jsx-sort-props': ['error', { ignoreCase: true, shorthandFirst: true, multiline: 'last', reservedFirst: true }],

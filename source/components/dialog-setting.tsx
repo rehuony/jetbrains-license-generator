@@ -45,11 +45,7 @@ export function DialogSetting() {
   }, []);
 
   return (
-    <dialog
-      ref={dialogRef}
-      className='fixed top-1/2 left-1/2 max-h-[85dvh] w-[min(90%,_50rem)] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl p-8 text-foreground shadow-2xl select-none [scrollbar-width:none] backdrop:bg-black/40 backdrop:backdrop-blur-md focus:outline-none [&::-webkit-scrollbar]:w-0'
-      id={dialogSettingId}
-    >
+    <dialog ref={dialogRef} className='fixed top-1/2 left-1/2 max-h-[85dvh] w-[min(90%,_50rem)] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl p-8 text-foreground shadow-2xl select-none [scrollbar-width:none] backdrop:bg-black/40 backdrop:backdrop-blur-md focus:outline-none [&::-webkit-scrollbar]:w-0' id={dialogSettingId}>
       <header className='flex flex-col gap-4 p-4 font-mono'>
         <h2 className='text-center text-2xl font-bold'>
           Personalize Information
@@ -60,57 +56,25 @@ export function DialogSetting() {
       </header>
       <form className='flex flex-col gap-4 font-mono'>
         <div className='grid grid-cols-4 items-center gap-2'>
-          <label
-            className='col-span-1 text-right'
-            htmlFor='email'
-          >
+          <label className='col-span-1 text-right' htmlFor='email'>
             Email:
           </label>
-          <input
-            autoComplete='off'
-            className='col-span-3 rounded-md border border-foreground/20 p-2'
-            defaultValue={email}
-            id='email'
-            name='email'
-            onChange={event => setLocalEmail(event.target.value)}
-          />
+          <input autoComplete='off' className='col-span-3 rounded-md border border-foreground/20 p-2' defaultValue={email} id='email' name='email' onChange={event => setLocalEmail(event.target.value)} />
         </div>
         <div className='grid grid-cols-4 items-center gap-2'>
-          <label
-            className='col-span-1 text-right'
-            htmlFor='username'
-          >
+          <label className='col-span-1 text-right' htmlFor='username'>
             Username:
           </label>
-          <input
-            autoComplete='off'
-            className='col-span-3 rounded-md border border-foreground/20 p-2'
-            defaultValue={username}
-            id='username'
-            name='username'
-            onChange={event => setLocalUsername(event.target.value)}
-          />
+          <input autoComplete='off' className='col-span-3 rounded-md border border-foreground/20 p-2' defaultValue={username} id='username' name='username' onChange={event => setLocalUsername(event.target.value)} />
         </div>
         <div className='grid grid-cols-4 items-center gap-2'>
-          <label
-            className='col-span-1 text-right'
-            htmlFor='expiry'
-          >
+          <label className='col-span-1 text-right' htmlFor='expiry'>
             Expiry Date:
           </label>
-          <input
-            autoComplete='off'
-            className='col-span-3 rounded-md border border-foreground/20 p-2'
-            defaultValue={expiryDate}
-            id='expiry'
-            name='expiry'
-            onChange={event => setLocalExpiryDate(event.target.value)}
-            type='date'
-          />
+          <input autoComplete='off' className='col-span-3 rounded-md border border-foreground/20 p-2' defaultValue={expiryDate} id='expiry' name='expiry' onChange={event => setLocalExpiryDate(event.target.value)} type='date' />
         </div>
         <footer className='flex items-center justify-between gap-4 p-2 px-8 font-mono'>
-          <button
-            className='w-[max(25%,_8rem)] cursor-pointer rounded-xl bg-foreground/20 px-4 py-3 shadow shadow-foreground/30 hover:bg-foreground/40'
+          <button className='w-[max(25%,_8rem)] cursor-pointer rounded-xl bg-foreground/20 px-4 py-3 shadow shadow-foreground/30 hover:bg-foreground/40'
             type='button'
             onClick={() => {
               closeDialog(dialogSettingId);
@@ -119,8 +83,7 @@ export function DialogSetting() {
           >
             Cancel
           </button>
-          <button
-            className='w-[max(25%,_8rem)] cursor-pointer rounded-xl bg-foreground/40 px-4 py-3 shadow shadow-foreground/40 hover:bg-foreground/60'
+          <button className='w-[max(25%,_8rem)] cursor-pointer rounded-xl bg-foreground/40 px-4 py-3 shadow shadow-foreground/40 hover:bg-foreground/60'
             type='button'
             onClick={() => {
               setEmail(localEmail);
