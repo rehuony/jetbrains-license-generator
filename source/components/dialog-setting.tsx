@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { dialogSettingId } from '@/constants/dialog';
 import { useLicenseStorage } from '@/hooks/use-storage';
+import { showNoticeCard } from '@/library/toaster';
 import { closeDialog } from '@/utils/dialog';
 
 export function DialogSetting() {
@@ -16,13 +17,6 @@ export function DialogSetting() {
   const [localEmail, setLocalEmail] = useState(email);
   const [localUsername, setLocalUsername] = useState(username);
   const [localExpiryDate, setLocalExpiryDate] = useState(expiryDate);
-
-  const handleSaveChange = () => {
-    setEmail(localEmail);
-    setUsername(localUsername);
-    setExpiryDate(localExpiryDate);
-    closeDialog(dialogSettingId);
-  };
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -117,15 +111,24 @@ export function DialogSetting() {
         <footer className='flex items-center justify-between gap-4 p-2 px-8 font-mono'>
           <button
             className='w-[max(25%,_8rem)] cursor-pointer rounded-xl bg-foreground/20 px-4 py-3 shadow shadow-foreground/30 hover:bg-foreground/40'
-            onClick={() => closeDialog(dialogSettingId)}
             type='button'
+            onClick={() => {
+              closeDialog(dialogSettingId);
+              showNoticeCard('⚠️', 'Cancel', 'No changes were made to the previous settings');
+            }}
           >
             Cancel
           </button>
           <button
             className='w-[max(25%,_8rem)] cursor-pointer rounded-xl bg-foreground/40 px-4 py-3 shadow shadow-foreground/40 hover:bg-foreground/60'
-            onClick={handleSaveChange}
             type='button'
+            onClick={() => {
+              setEmail(localEmail);
+              setUsername(localUsername);
+              setExpiryDate(localExpiryDate);
+              closeDialog(dialogSettingId);
+              showNoticeCard('🎉', 'Success', 'Successfully applied the new settings');
+            }}
           >
             Save
           </button>

@@ -12,6 +12,22 @@
 
 @theme inline {
   --color-foreground: var(--foreground);
+
+  --animate-slightly-rotated: slightly-rotated 800ms cubic-bezier(0.2, 0.2, 0.8, 0.8) infinite;
+
+  @keyframes slightly-rotated {
+    0%,
+    50%,
+    100% {
+      transform: rotate(0deg) scale(1);
+    }
+    25% {
+      transform: rotate(4deg) scale(1.15);
+    }
+    75% {
+      transform: rotate(-4deg) scale(1.15);
+    }
+  }
 }
 
 @layer base {

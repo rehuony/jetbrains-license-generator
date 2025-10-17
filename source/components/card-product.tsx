@@ -2,6 +2,7 @@ import clipboard from 'clipboardy';
 import forge from 'node-forge';
 import { useCallback } from 'react';
 import { useCertificateStorage, useLicenseStorage, useLocalStorage } from '@/hooks/use-storage';
+import { showNoticeCard } from '@/library/toaster';
 import { convertPemToString, generateLicenseId } from '@/utils/license';
 import { cn, isProductMatch } from '@/utils/utils';
 
@@ -52,9 +53,13 @@ export function CardProduct(props: IDEDataItem | PluginDataItem) {
 
     const pluginLicense = `${licenseId}-${licensePartBase64}-${sigResultsBase64}-${publicPemString}`;
 
-    await clipboard.write(pluginLicense);
-    // toast(`successfully copy ${props.name}'s license`);
-  }, [email, expiryDate, privatePem, props.code, publicPem, username]);
+    try {
+      await clipboard.write(pluginLicense);
+      showNoticeCard('🎉', 'Success', `Successfully copied ${props.name}'s license key`);
+    } catch {
+      showNoticeCard('❌', 'Error', `Failed to copy ${props.name}'s license key`);
+    }
+  }, [email, expiryDate, privatePem, props.code, props.name, publicPem, username]);
 
   return (
     <article className={cn(`w-5/6 rounded-xl bg-foreground/10 shadow-xl ring shadow-foreground/20 ring-foreground/10 duration-300 select-none hover:-translate-y-1`, isProductMatch(props.name, text) ? '' : `hidden`)}>
@@ -90,7 +95,7 @@ export function CardProduct(props: IDEDataItem | PluginDataItem) {
             {'*'.repeat(128)}
           </span>
           <span
-            className='invisible absolute top-0 left-0 flex size-full items-center justify-center rounded-full font-light text-foreground/80 group-hover:visible group-hover:bg-foreground/30'
+            className='invisible absolute top-0 left-0 flex size-full cursor-pointer items-center justify-center rounded-full font-light text-foreground/80 group-hover:visible group-hover:bg-foreground/30'
             onClick={copyProductLicense}
           >
             Copy to clipboard

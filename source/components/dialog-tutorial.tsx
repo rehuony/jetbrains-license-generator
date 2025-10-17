@@ -78,7 +78,7 @@ export function DialogTutorial() {
           <li>
             <span className='pr-2 font-semibold'>Modify VM Options:</span>
             <span className='font-normal opacity-85'>
-              Open the target IDE’s /bin directory. For example: /Applications/CLion.app/Contents/bin.
+              Open the target product’s /bin directory, for example: /Applications/CLion.app/Contents/bin.
               Edit the corresponding VM options file, such as clion.vmoptions, and append the following
               lines:
             </span>
@@ -108,7 +108,7 @@ export function DialogTutorial() {
       </form>
       <footer className='mt-8 flex w-full items-center justify-center font-mono'>
         <button
-          className='w-[max(25%,_8rem)] rounded-lg bg-foreground/15 px-6 py-3 text-sm font-medium shadow-md shadow-foreground/20 transition-all hover:scale-[1.02] hover:bg-foreground/25 active:scale-[0.98]'
+          className='w-[max(25%,_8rem)] cursor-pointer rounded-lg bg-foreground/15 px-6 py-3 text-sm font-medium shadow-md shadow-foreground/20 transition-all hover:scale-[1.02] hover:bg-foreground/25 active:scale-[0.98]'
           onClick={() => closeDialog(dialogTutorialId)}
           type='button'
         >

@@ -126,7 +126,7 @@ export function DialogDisclaimer() {
       </form>
       <footer className='mt-8 flex w-full items-center justify-center'>
         <button
-          className='w-[max(25%,_8rem)] rounded-lg bg-foreground/15 px-6 py-3 font-mono text-sm font-medium shadow-md shadow-foreground/20 transition-all hover:scale-[1.02] hover:bg-foreground/25 active:scale-[0.98]'
+          className='w-[max(25%,_8rem)] cursor-pointer rounded-lg bg-foreground/15 px-6 py-3 font-mono text-sm font-medium shadow-md shadow-foreground/20 transition-all hover:scale-[1.02] hover:bg-foreground/25 active:scale-[0.98]'
           type='button'
           onClick={() => {
             setIsAgree(true);
