@@ -1,4 +1,5 @@
 import { DialogDisclaimer } from '@/components/dialog-disclaimer';
+import { DialogSearch } from '@/components/dialog-search';
 import { DialogSetting } from '@/components/dialog-setting';
 import { DialogTutorial } from '@/components/dialog-tutorial';
 import { PageFooter } from '@/components/page-footer';
@@ -13,6 +14,7 @@ export function App() {
         <PageHeader />
         <PageMain />
         <PageFooter />
+        <DialogSearch />
         <DialogSetting />
         <DialogTutorial />
         <DialogDisclaimer />

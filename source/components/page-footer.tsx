@@ -1,6 +1,6 @@
-import { ArrowBigUpDash, CloudDownload, ScrollText, Settings, ShieldCheck } from 'lucide-react';
-import { ButtonIcon } from '@/components/button-icon';
-import { dialogDisclaimerId, dialogSettingId, dialogTutorialId } from '@/constants/dialog';
+import { ArrowBigUpDash, CloudDownload, ScrollText, Search, Settings, ShieldCheck } from 'lucide-react';
+import { IconButton } from '@/components/icon-button';
+import { dialogDisclaimerId, dialogSearchId, dialogSettingId, dialogTutorialId } from '@/constants/dialog';
 import { useProgress } from '@/hooks/use-progress';
 import { openDialog } from '@/utils/dialog';
 import { downloadJaNetfilter } from '@/utils/download';
@@ -8,31 +8,39 @@ import { downloadJaNetfilter } from '@/utils/download';
 export function PageFooter() {
   const progress = useProgress();
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <footer className='fixed right-0 bottom-0 z-100 -translate-x-2 -translate-y-2 bg-transparent p-2'>
+    <footer className='fixed right-0 bottom-0 z-100 -translate-x-2 -translate-y-4 bg-transparent'>
       <div className='flex flex-col items-center justify-center gap-2'>
         {/* return top button */}
-        {progress >= 5 && (
-          <ButtonIcon onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+        {progress >= 10 && (
+          <IconButton onClick={scrollToTop}>
             <ArrowBigUpDash className='size-6 text-foreground' />
-          </ButtonIcon>
+          </IconButton>
         )}
+        {/* search button */}
+        <IconButton className='md:hidden' onClick={() => openDialog(dialogSearchId)}>
+          <Search className='size-6 text-foreground' />
+        </IconButton>
         {/* disclaimer button */}
-        <ButtonIcon onClick={() => openDialog(dialogDisclaimerId)}>
+        <IconButton onClick={() => openDialog(dialogDisclaimerId)}>
           <ShieldCheck className='size-6 text-foreground' />
-        </ButtonIcon>
+        </IconButton>
         {/* download button */}
-        <ButtonIcon onClick={downloadJaNetfilter}>
+        <IconButton onClick={downloadJaNetfilter}>
           <CloudDownload className='size-6 text-foreground' />
-        </ButtonIcon>
+        </IconButton>
         {/* tutorial button */}
-        <ButtonIcon onClick={() => openDialog(dialogTutorialId)}>
+        <IconButton onClick={() => openDialog(dialogTutorialId)}>
           <ScrollText className='size-6 text-foreground' />
-        </ButtonIcon>
+        </IconButton>
         {/* setting button */}
-        <ButtonIcon onClick={() => openDialog(dialogSettingId)}>
+        <IconButton onClick={() => openDialog(dialogSettingId)}>
           <Settings className='size-6 text-foreground' />
-        </ButtonIcon>
+        </IconButton>
       </div>
     </footer>
   );

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { CardProduct } from '@/components/card-product';
 import { MainError } from '@/components/main-error';
 import { MainPending } from '@/components/main-pending';
+import { ProductCard } from '@/components/product-card';
 import { useCertificateStorage } from '@/hooks/use-storage';
 
 export function PageMain() {
@@ -43,12 +43,12 @@ export function PageMain() {
   if (response.isError) return <MainError />;
 
   return (
-    <main className='grid grid-cols-[repeat(auto-fill,_minmax(min(20rem,_100%),_1fr))] content-center justify-items-center gap-14 px-6 py-10'>
+    <main className='relative grid grid-cols-[repeat(auto-fill,_minmax(min(20rem,_100%),_1fr))] content-center justify-items-center gap-12 px-8 py-10'>
       {response.data.ides.map(item => (
-        <CardProduct key={item.code} {...item} />
+        <ProductCard key={item.code} {...item} />
       ))}
       {response.data.plugins.map(item => (
-        <CardProduct key={item.code} {...item} />
+        <ProductCard key={item.code} {...item} />
       ))}
     </main>
   );
