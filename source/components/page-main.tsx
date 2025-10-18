@@ -13,9 +13,6 @@ export function PageMain() {
   const response = useQuery({
     queryKey: ['ide-data', 'plugin-data', 'certificate-data'],
     queryFn: async () => {
-      // Simulate long time loading of resources
-      // await new Promise(resolve => setTimeout(resolve, 10000));
-
       const ideData = await fetch('/generated/ide-data.json').then(res => res.ok ? res.json() as unknown as IDEDataJSON : null);
       if (ideData === null) throw new Error('failed to fetch ide-data.json');
       const pluginData = await fetch('/generated/plugin-data.json').then(res => res.ok ? res.json() as unknown as PluginDataJSON : null);
