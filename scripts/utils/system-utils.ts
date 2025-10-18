@@ -57,6 +57,9 @@ export async function persistDataToFile<T extends
   await promises.mkdir(resolve(destination, '..'), { recursive: true });
   // Save data to specified destination
   await promises.writeFile(destination, data, 'utf-8');
-  // Ensure the file ends with a newline
-  await promises.appendFile(destination, '\n');
+  // Ensure the file ends with a newline — only append if the file doesn't already end with LF
+  const fileBuffer = await promises.readFile(destination);
+  if (fileBuffer.length === 0 || fileBuffer[fileBuffer.length - 1] !== 0x0A) {
+    await promises.appendFile(destination, '\n');
+  }
 }

@@ -8,10 +8,12 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "clean": "rimraf build dist",
     "preview": "vite preview",
-    "prebuild": "tsc -p tsconfig.node.json && node build",
     "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "eslint --fix .",
+    "prebuild": "tsc -p tsconfig.node.json && node build",
+    "prebuild:focus": "rimraf public/generated && pnpm prebuild"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.14",
@@ -47,6 +49,7 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.24",
+    "rimraf": "^6.0.1",
     "typescript": "~5.8.3",
     "vite": "^7.1.10",
     "vite-tsconfig-paths": "^5.1.4"
