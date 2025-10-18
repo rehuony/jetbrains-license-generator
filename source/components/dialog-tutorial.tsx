@@ -35,73 +35,57 @@ export function DialogTutorial() {
   }, []);
 
   return (
-    <dialog ref={dialogRef} className='top-1/2 left-1/2 max-h-[85dvh] w-[min(90%,_50rem)] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl p-8 text-foreground shadow-2xl select-none [scrollbar-width:none] backdrop:bg-black/40 backdrop:backdrop-blur-md focus:outline-none [&::-webkit-scrollbar]:w-0' id={dialogTutorialId}>
-      <form className='flex flex-col gap-4 font-mono' method='dialog'>
-        <header className='flex flex-col gap-4 text-center font-mono'>
-          <h2 className='text-3xl font-bold tracking-wide'>
+    <dialog ref={dialogRef} className='absolute top-1/2 left-1/2 max-h-[85dvh] w-[min(90%,_50rem)] animate-dialog-in overflow-y-auto rounded-2xl bg-surface p-8 text-foreground shadow-2xl ring-1 ring-border select-none [scrollbar-width:none] backdrop:bg-surface/40 backdrop:backdrop-blur-md focus:outline-none' id={dialogTutorialId}>
+      <form className='flex flex-col gap-6 font-mono' method='dialog'>
+        <header className='flex flex-col items-center gap-2 text-center'>
+          <h2 className='text-3xl font-bold tracking-wide text-foreground'>
             Tutorial
           </h2>
-          <p className='text-sm font-light opacity-70'>
-            <span className='pr-2 font-bold'>
-              Author:
-            </span>
-            <a href='mailto:rehuony@gmail.com'>
+          <p className='text-sm font-light text-muted'>
+            <span className='pr-2 font-semibold'>Author:</span>
+            <a className='text-accent hover:underline' href='mailto:rehuony@gmail.com'>
               rehuony@gmail.com
             </a>
           </p>
         </header>
-        <ol className='flex list-decimal flex-col gap-2 pl-6 leading-8 break-all whitespace-normal'>
+        <ol className='flex list-decimal flex-col gap-3 pl-6 leading-8 text-foreground/80'>
           <li>
             <span className='pr-2 font-semibold'>Download:</span>
-            <span className='font-normal opacity-85'>
-              Click the download button to download the ja-netfilter.zip file.
-            </span>
+            Click the download button to download the ja-netfilter.zip file.
           </li>
           <li>
             <span className='pr-2 font-semibold'>Unzip the Package:</span>
-            <span className='font-normal opacity-85'>
-              Extract ja-netfilter.zip into your desired directory, for example: /path/to/ja-netfilter
-            </span>
+            Extract ja-netfilter.zip into your desired directory, e.g., /path/to/ja-netfilter
           </li>
           <li>
             <span className='pr-2 font-semibold'>Check Configuration Files:</span>
-            <span className='font-normal opacity-85'>
-              Verify that the content under the result section in ja-netfilter/config-jetbrains/power.conf
-              matches the configuration provided on this website. If the values differ for any reason,
-              replace the original content with the following:
-            </span>
+            Verify the content under the result section in ja-netfilter/config-jetbrains/power.conf
+            matches the website-provided configuration.
             <CodeViewport code={powerConf} language='power.conf' />
           </li>
           <li>
             <span className='pr-2 font-semibold'>Modify VM Options:</span>
-            <span className='font-normal opacity-85'>
-              Open the target product’s /bin directory, for example: /Applications/CLion.app/Contents/bin.
-              Edit the corresponding VM options file, such as clion.vmoptions, and append the following
-              lines:
-            </span>
+            Open the target product’s /bin directory, edit the corresponding VM options file
+            (e.g., clion.vmoptions), and append the required lines.
             <CodeViewport code={vmOptions} language='clion.vmoptions' />
           </li>
           <li>
             <span className='pr-2 font-semibold'>Activate Product License:</span>
-            <span className='font-normal opacity-85'>
-              After completing the steps above, restart your IDE and open the activation window.
-              Copy the corresponding license key from this website and paste it into the
-              activation field, then click Activate button.
-            </span>
+            Restart your IDE, open the activation window, paste the license key, and click activate
+            button.
           </li>
           <li>
             <span className='pr-2 font-semibold'>Enjoy Coding:</span>
-            <span className='font-normal opacity-85'>
-              Congratulations! 🎉 You’re now ready to enjoy a smooth coding experience.
-            </span>
+            🎉 You’re ready to enjoy a smooth coding experience.
           </li>
         </ol>
-        <footer className='flex w-full items-center justify-center font-mono'>
-          <button className='w-[min(50%,_24rem)] cursor-pointer rounded-lg bg-foreground/15 px-6 py-3 text-sm font-medium shadow-md shadow-foreground/20 transition-all hover:scale-[1.02] hover:bg-foreground/25 active:scale-[0.98]' type='submit'>
+        <footer className='flex w-full justify-center'>
+          <button className='w-[min(50%,_24rem)] min-w-fit cursor-pointer rounded-lg bg-accent/80 px-6 py-3 text-sm font-medium text-accent-foreground shadow-md shadow-accent/60 transition-transform duration-150 hover:scale-[1.02] hover:bg-accent active:scale-[0.98]' type='submit'>
             Close This Page
           </button>
         </footer>
       </form>
     </dialog>
+
   );
 }

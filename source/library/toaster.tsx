@@ -8,12 +8,12 @@ export async function showNoticeCard(icon: string, title: string, message: strin
 
   toast.custom(
     () => (
-      <div className='flex max-w-[min(90%,_36rem)] flex-col items-center justify-center gap-2 rounded-xl border border-gray-100 bg-foreground/10 px-4 py-2 shadow-2xl backdrop-blur-sm'>
-        <h2 className='flex items-center justify-center gap-2 text-xl font-bold select-none'>
-          <span className='animate-slightly-rotated'>{icon}</span>
+      <div className='flex max-w-[min(90%,_36rem)] flex-col items-center justify-center gap-2 rounded-xl border border-border bg-surface px-4 py-3 text-foreground shadow-2xl backdrop-blur-md transition-all duration-300'>
+        <h2 className='flex items-center justify-center gap-2 text-lg font-semibold text-foreground select-none'>
+          <span className='animate-slightly-rotated text-accent'>{icon}</span>
           <span>{title}</span>
         </h2>
-        <div className='font-mono leading-8 break-all whitespace-normal select-none'>
+        <div className='text-center font-mono leading-7 break-all whitespace-normal text-muted select-none'>
           {message}
         </div>
       </div>

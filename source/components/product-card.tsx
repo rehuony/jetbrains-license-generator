@@ -74,30 +74,36 @@ export function ProductCard(props: IDEDataItem | PluginDataItem) {
   }, [props.icon]);
 
   return (
-    <article className={cn(`w-full rounded-xl bg-foreground/10 shadow-xl ring shadow-foreground/20 ring-foreground/10 duration-300 select-none hover:-translate-y-1 md:w-5/6`, isProductMatch(props.name, text) ? '' : `hidden`)}>
-      <header className='flex items-center justify-between border-b-1 px-4'>
+    <article className={cn(`w-full rounded-xl bg-surface text-foreground shadow-xl ring-1 ring-border select-none hover:-translate-y-[2px] hover:ring-accent/40 md:w-5/6`, isProductMatch(props.name, text)
+      ? ''
+      : `hidden`)}
+    >
+      <header className='flex items-center justify-between border-b border-border px-4 pb-1'>
         <span className='size-16 translate-y-1/2'>
-          <img ref={imgRef} alt={`${props.name}'s logo`} className='pointer-events-none size-full min-h-16 min-w-16' loading='lazy' src='/pagelogo.svg' />
+          <img ref={imgRef}alt={`${props.name}'s logo`}className='pointer-events-none size-full'loading='lazy'src='/pagelogo.svg' />
         </span>
-        <span className='cursor-pointer rounded-full border border-foreground/50 text-sm text-foreground/50 hover:border-foreground/80 hover:text-foreground/80'>
+        <span className='cursor-pointer rounded-full border border-border text-sm text-muted hover:border-accent hover:text-accent'>
           <a className='block px-8 py-2' href={props.link} rel='noopener noreferrer' target='_blank'>
             official
           </a>
         </span>
       </header>
       <section className='flex flex-col gap-8 px-4 pt-8 pb-4'>
-        <span className='w-full translate-y-1/2 overflow-hidden font-mono text-2xl font-light text-ellipsis whitespace-nowrap' title={props.name}>
+        <span className='w-full translate-y-1/2 overflow-hidden font-mono text-2xl font-light text-ellipsis whitespace-nowrap text-foreground' title={props.name}>
           {props.name}
         </span>
-        <span className='group relative text-left font-mono text-sm text-wrap wrap-anywhere'>
-          <span className='block max-h-[calc(1.5em*3)] overflow-hidden tracking-widest text-foreground/50 group-hover:invisible' style={{ lineHeight: '1.5em' }}>
-            {'*'.repeat(128)}
-          </span>
-          <span className='absolute top-0 left-0 flex size-full cursor-pointer items-center justify-center rounded-full bg-foreground/30 font-light text-foreground/80 opacity-100 hover:bg-foreground/40 hover:text-foreground md:invisible md:group-hover:visible md:hover:visible' onClick={copyProductLicense}>
+        <span className='group relative font-mono text-sm text-wrap wrap-anywhere'>
+          <button className='h-[4.5rem] w-full cursor-pointer rounded-full bg-muted/20 text-center font-light text-muted opacity-100 transition-all duration-200 hover:bg-muted/40 hover:text-foreground' onClick={copyProductLicense}type='button'>
             Copy to clipboard
+          </button>
+          <span className='absolute top-0 left-0 hidden size-full items-center justify-center overflow-hidden bg-surface tracking-widest text-muted group-hover:hidden md:flex'>
+            <p className='h-[calc(1.5em*3)]' style={{ lineHeight: '1.5em' }}>
+              {'*'.repeat(128)}
+            </p>
           </span>
         </span>
       </section>
     </article>
+
   );
 }

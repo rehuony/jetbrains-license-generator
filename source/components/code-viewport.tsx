@@ -25,18 +25,18 @@ export function CodeViewport({ code, language }: CodeViewportProps) {
 
   return (
     <CodeBlock code={code} language={language}>
-      <div className='relative'>
-        <div className='absolute top-0 left-0 flex h-12 w-full items-center justify-between pr-2 pl-4'>
-          <span className='text-gray-200'>
+      <div className='relative overflow-hidden rounded-xl shadow-md ring-1 ring-border/40 dark:shadow-none'>
+        <div className='flex h-12 items-center justify-between border-b border-border/40 bg-surface/80 px-4 backdrop-blur-sm dark:bg-muted/50'>
+          <span className='text-sm font-medium text-foreground/70 dark:text-foreground/60'>
             {language}
           </span>
-          <button className='cursor-pointer rounded-full bg-white px-3 py-1.5 text-sm font-semibold' onClick={handleCopyCode} type='button'>
-            {isCopied === null ? 'Copy' : isCopied ? 'Copied' : 'Error'}
+          <button className='cursor-pointer rounded-full bg-foreground/10 px-3 py-1.5 text-sm font-semibold text-foreground transition-all duration-150 hover:bg-foreground/20 dark:bg-foreground/20 dark:hover:bg-foreground/30' onClick={handleCopyCode} type='button'>
+            {isCopied === null ? 'Copy' : isCopied ? '🎉 Copied' : '❌ Error'}
           </button>
         </div>
-        <CodeBlock.Code className='overflow-x-auto rounded-xl bg-gray-900 p-4 pt-12 shadow-lg select-text'>
+        <CodeBlock.Code className='overflow-x-auto bg-surface p-4 font-mono text-sm leading-relaxed text-foreground dark:bg-muted/30'>
           <div className='table-row'>
-            <CodeBlock.LineNumber className='table-cell pr-4 text-right text-sm text-gray-500 select-none' />
+            <CodeBlock.LineNumber className='table-cell pr-4 text-right text-foreground/40 select-none dark:text-foreground/50' />
             <CodeBlock.LineContent className='table-cell'>
               <CodeBlock.Token />
             </CodeBlock.LineContent>

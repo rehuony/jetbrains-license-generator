@@ -20,9 +20,13 @@ export function MenuSearch({ className }: React.ComponentProps<'div'>) {
   };
 
   return (
-    <div className={cn('relative hidden items-center md:flex', className)}>
-      <Search className='pointer-events-none absolute size-4 min-h-4 min-w-4 translate-x-1/2' />
-      <input autoComplete='off' className='size-full rounded-full bg-transparent px-2 pl-8 font-mono font-light text-foreground/60 tabular-nums ring ring-foreground/60 selection:bg-foreground/20 placeholder:select-none focus-visible:outline-2 focus-visible:outline-foreground/60' name='search' onChange={handleChange} placeholder='search product...' value={localText} />
+    <div className={cn(
+      `relative hidden items-center rounded-full border border-border bg-surface transition-all duration-300 focus-within:ring-2 focus-within:ring-accent md:flex`,
+      className,
+    )}
+    >
+      <Search className='pointer-events-none absolute left-2 size-4 text-muted' />
+      <input autoComplete='off' className='size-full rounded-full bg-transparent pr-2 pl-8 font-mono font-light text-foreground placeholder-muted selection:bg-accent/20 focus-visible:outline-none' name='search' onChange={handleChange} placeholder='search product...' value={localText} />
     </div>
   );
 }
