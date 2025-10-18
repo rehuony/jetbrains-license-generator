@@ -1,12 +1,13 @@
 import clipboard from 'clipboardy';
 import forge from 'node-forge';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useCertificateStorage, useLicenseStorage, useLocalStorage } from '@/hooks/use-storage';
 import { showNoticeCard } from '@/library/toaster';
 import { convertPemToString, generateLicenseId } from '@/utils/license';
 import { cn, isProductMatch } from '@/utils/utils';
 
 export function ProductCard(props: IDEDataItem | PluginDataItem) {
+  const imgRef = useRef<HTMLImageElement>(null);
   const text = useLocalStorage(state => state.text);
   const email = useLicenseStorage(state => state.email);
   const username = useLicenseStorage(state => state.username);
@@ -61,11 +62,22 @@ export function ProductCard(props: IDEDataItem | PluginDataItem) {
     }
   }, [email, expiryDate, privatePem, props.code, props.name, publicPem, username]);
 
+  useEffect(() => {
+    const realImg = new Image();
+    realImg.src = props.icon;
+    realImg.onload = () => {
+      if (imgRef.current) {
+        imgRef.current.src = props.icon;
+        imgRef.current.classList.add('loaded');
+      }
+    };
+  }, [props.icon]);
+
   return (
     <article className={cn(`w-full rounded-xl bg-foreground/10 shadow-xl ring shadow-foreground/20 ring-foreground/10 duration-300 select-none hover:-translate-y-1 md:w-5/6`, isProductMatch(props.name, text) ? '' : `hidden`)}>
       <header className='flex items-center justify-between border-b-1 px-4'>
         <span className='size-16 translate-y-1/2'>
-          <img alt={`${props.name}'s logo`} className='pointer-events-none size-full min-h-16 min-w-16' loading='lazy' src={props.icon} />
+          <img ref={imgRef} alt={`${props.name}'s logo`} className='pointer-events-none size-full min-h-16 min-w-16' loading='lazy' src='/pagelogo.svg' />
         </span>
         <span className='cursor-pointer rounded-full border border-foreground/50 text-sm text-foreground/50 hover:border-foreground/80 hover:text-foreground/80'>
           <a className='block px-8 py-2' href={props.link} rel='noopener noreferrer' target='_blank'>
