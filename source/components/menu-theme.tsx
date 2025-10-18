@@ -10,15 +10,15 @@ export function MenuTheme({ className }: React.ComponentProps<'div'>) {
   return (
     <div className={cn('relative grid grid-cols-3 bg-foreground/15', className)}>
       {/* light theme */}
-      <IconButton className={cn('bg-transparent p-2.5', (theme === 'light' ? `bg-foreground/30` : ''))} onClick={() => setTheme('light')}>
+      <IconButton className={cn('bg-transparent p-2.5', (theme === 'light' ? `bg-foreground/30` : ''))} onClick={() => setTheme('light')} title='light'>
         <Sun className='size-4 text-foreground' />
       </IconButton>
       {/* system theme */}
-      <IconButton className={cn('bg-transparent p-0.5', (theme === 'system' ? `bg-foreground/30` : ''))} onClick={() => setTheme('system')}>
+      <IconButton className={cn('bg-transparent p-0.5', (theme === 'system' ? `bg-foreground/30` : ''))} onClick={() => setTheme('system')} title='system'>
         <Monitor className='size-4 text-foreground' />
       </IconButton>
       {/* dark theme */}
-      <IconButton className={cn('bg-transparent p-0.5', (theme === 'dark' ? `bg-foreground/30` : ''))} onClick={() => setTheme('dark')}>
+      <IconButton className={cn('bg-transparent p-0.5', (theme === 'dark' ? `bg-foreground/30` : ''))} onClick={() => setTheme('dark')} title='dark'>
         <Moon className='size-4 text-foreground' />
       </IconButton>
     </div>

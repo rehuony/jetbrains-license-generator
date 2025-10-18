@@ -17,28 +17,28 @@ export function PageFooter() {
       <div className='flex flex-col items-center justify-center gap-2'>
         {/* return top button */}
         {progress >= 10 && (
-          <IconButton onClick={scrollToTop}>
+          <IconButton onClick={scrollToTop} title='Scroll To Top'>
             <ArrowBigUpDash className='size-6 text-foreground' />
           </IconButton>
         )}
         {/* search button */}
-        <IconButton className='md:hidden' onClick={() => openDialog(dialogSearchId)}>
+        <IconButton className='md:hidden' onClick={() => openDialog(dialogSearchId)} title='Search Production'>
           <Search className='size-6 text-foreground' />
         </IconButton>
         {/* disclaimer button */}
-        <IconButton onClick={() => openDialog(dialogDisclaimerId)}>
+        <IconButton onClick={() => openDialog(dialogDisclaimerId)} title='Disclaimer Terms'>
           <ShieldCheck className='size-6 text-foreground' />
         </IconButton>
         {/* download button */}
-        <IconButton onClick={downloadJaNetfilter}>
+        <IconButton onClick={downloadJaNetfilter} title='Download ja-netfilter.zip'>
           <CloudDownload className='size-6 text-foreground' />
         </IconButton>
         {/* tutorial button */}
-        <IconButton onClick={() => openDialog(dialogTutorialId)}>
+        <IconButton onClick={() => openDialog(dialogTutorialId)} title='Product Tutorial'>
           <ScrollText className='size-6 text-foreground' />
         </IconButton>
         {/* setting button */}
-        <IconButton onClick={() => openDialog(dialogSettingId)}>
+        <IconButton onClick={() => openDialog(dialogSettingId)} title='Personalize Information'>
           <Settings className='size-6 text-foreground' />
         </IconButton>
       </div>
