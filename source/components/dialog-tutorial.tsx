@@ -86,6 +86,5 @@ export function DialogTutorial() {
         </footer>
       </form>
     </dialog>
-
   );
 }

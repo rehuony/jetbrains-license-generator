@@ -1,5 +1,5 @@
 export function convertPemToString(pemCert: string) {
-  return pemCert.split(/\s+/g).reduce((result, line) => (line.includes('--') ? result : result + line), '');
+  return pemCert.split(/\s+/g).reduce((result, line) => (line.includes('----') ? result : result + line), '');
 }
 
 export function getExpiryDate(expiry = 1) {
@@ -8,7 +8,7 @@ export function getExpiryDate(expiry = 1) {
 
   const year = nextYear.getFullYear();
   const month = String(nextYear.getMonth() + 1).padStart(2, '0');
-  const day = String(nextYear.getDay()).padStart(2, '0');
+  const day = String(nextYear.getDate()).padStart(2, '0');
 
   return `${year}-${month}-${day}`;
 }

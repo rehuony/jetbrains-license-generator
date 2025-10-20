@@ -70,6 +70,5 @@ export function DialogSearch() {
         </footer>
       </form>
     </dialog>
-
   );
 }

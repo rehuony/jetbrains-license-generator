@@ -104,6 +104,5 @@ export function DialogDisclaimer() {
         </footer>
       </form>
     </dialog>
-
   );
 }

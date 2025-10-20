@@ -43,9 +43,27 @@ export function DialogSetting() {
     };
   }, []);
 
+  const handleCancelChange = () => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    dialog.close();
+    setLocalEmail(email);
+    setLocalUsername(username);
+    setLocalExpiryDate(expiryDate);
+    showNoticeCard('⚠️', 'Canceled', 'New changes were not saved');
+  };
+
+  const handleSaveChange = () => {
+    setEmail(localEmail);
+    setUsername(localUsername);
+    setExpiryDate(localExpiryDate);
+    showNoticeCard('🎉', 'Success', 'Successfully applied the new settings');
+  };
+
   return (
     <dialog ref={dialogRef} className='absolute top-1/2 left-1/2 max-h-[85dvh] w-[min(90%,_40rem)] animate-dialog-in overflow-y-auto rounded-2xl bg-surface p-8 text-foreground shadow-2xl ring-1 ring-border select-none [scrollbar-width:none] backdrop:bg-surface/40 backdrop:backdrop-blur-md focus:outline-none' id={dialogSettingId}>
-      <form className='flex flex-col gap-6 font-mono' method='dialog'>
+      <form className='flex flex-col gap-6 font-mono' method='dialog' onReset={handleCancelChange} onSubmit={handleSaveChange}>
         <header className='flex flex-col items-center gap-2'>
           <h2 className='text-3xl font-bold tracking-wide text-foreground'>
             Personalize
@@ -69,23 +87,14 @@ export function DialogSetting() {
           ))}
         </main>
         <footer className='flex items-center justify-between gap-4'>
-          <button className='w-[min(50%,_14rem)] min-w-fit cursor-pointer rounded-xl bg-foreground/20 px-4 py-3 shadow shadow-foreground/30 transition-colors duration-150 hover:bg-foreground/30' type='submit'>
+          <button className='w-[min(50%,_14rem)] min-w-fit cursor-pointer rounded-xl bg-foreground/20 px-4 py-3 shadow shadow-foreground/30 transition-colors duration-150 hover:bg-foreground/30' type='reset'>
             Cancel
           </button>
-          <button className='w-[min(50%,_14rem)] min-w-fit cursor-pointer rounded-xl bg-accent px-4 py-3 text-accent-foreground shadow shadow-accent/60 transition-colors duration-150 hover:bg-accent/70'
-            type='submit'
-            onClick={() => {
-              setEmail(localEmail);
-              setUsername(localUsername);
-              setExpiryDate(localExpiryDate);
-              showNoticeCard('🎉', 'Success', 'Successfully applied the new settings');
-            }}
-          >
+          <button className='w-[min(50%,_14rem)] min-w-fit cursor-pointer rounded-xl bg-accent px-4 py-3 text-accent-foreground shadow shadow-accent/60 transition-colors duration-150 hover:bg-accent/70' type='submit'>
             Save
           </button>
         </footer>
       </form>
     </dialog>
-
   );
 }

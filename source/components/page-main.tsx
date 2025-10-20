@@ -52,6 +52,5 @@ export function PageMain() {
         <ProductCard key={item.code} {...item} />
       ))}
     </main>
-
   );
 }
