@@ -1,12 +1,14 @@
 import clipboard from 'clipboardy';
 import forge from 'node-forge';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useCertificateStorage, useLicenseStorage, useLocalStorage } from '@/hooks/use-storage';
 import { showNoticeCard } from '@/library/toaster';
 import { convertPemToString, generateLicenseId } from '@/utils/license';
 import { cn, isProductMatch } from '@/utils/utils';
 
 export function ProductCard(props: IDEDataItem | PluginDataItem) {
+  const [isCopied, setIsCopied] = useState<boolean | null>(null);
+
   const imgRef = useRef<HTMLImageElement>(null);
   const text = useLocalStorage(state => state.text);
   const email = useLicenseStorage(state => state.email);
@@ -56,10 +58,16 @@ export function ProductCard(props: IDEDataItem | PluginDataItem) {
 
     try {
       await clipboard.write(pluginLicense);
+      setIsCopied(true);
       showNoticeCard('🎉', 'Success', `Successfully copied ${props.name}'s license key`);
     } catch {
+      setIsCopied(false);
       showNoticeCard('❌', 'Error', `Failed to copy ${props.name}'s license key`);
     }
+
+    setTimeout(() => {
+      setIsCopied(null);
+    }, 3000);
   }, [email, expiryDate, privatePem, props.code, props.name, publicPem, username]);
 
   useEffect(() => {
@@ -74,10 +82,7 @@ export function ProductCard(props: IDEDataItem | PluginDataItem) {
   }, [props.icon]);
 
   return (
-    <article className={cn(`w-full rounded-xl bg-surface text-foreground shadow-xl ring-1 ring-border select-none hover:-translate-y-[2px] hover:ring-accent/40 md:w-5/6`, isProductMatch(props.name, text)
-      ? ''
-      : `hidden`)}
-    >
+    <article className={cn(`w-full rounded-xl bg-surface text-foreground shadow-xl ring-1 ring-border select-none hover:-translate-y-[2px] hover:ring-accent/40 md:w-5/6`, isProductMatch(props.name, text) ? '' : `hidden`)}>
       <header className='flex items-center justify-between border-b border-border px-4 pb-1'>
         <span className='size-16 translate-y-1/2'>
           <img ref={imgRef}alt={`${props.name}'s logo`}className='pointer-events-none size-full'loading='lazy'src='/pagelogo.svg' />
@@ -94,7 +99,7 @@ export function ProductCard(props: IDEDataItem | PluginDataItem) {
         </span>
         <span className='group relative font-mono text-sm text-wrap wrap-anywhere'>
           <button className='h-[4.5rem] w-full cursor-pointer rounded-full bg-muted/20 text-center font-light text-muted opacity-100 transition-all duration-200 hover:bg-muted/40 hover:text-foreground' onClick={copyProductLicense}type='button'>
-            Copy to clipboard
+            {isCopied === null ? 'Copy to clipboard' : isCopied ? '🎉 Copied' : '❌ Error'}
           </button>
           <span className='absolute top-0 left-0 hidden size-full items-center justify-center overflow-hidden bg-surface tracking-widest text-muted group-hover:hidden md:flex'>
             <p className='h-[calc(1.5em*3)]' style={{ lineHeight: '1.5em' }}>
@@ -104,6 +109,5 @@ export function ProductCard(props: IDEDataItem | PluginDataItem) {
         </span>
       </section>
     </article>
-
   );
 }
