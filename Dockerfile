@@ -10,7 +10,10 @@ RUN pnpm install --frozen-lockfile
 
 COPY . .
 
-RUN pnpm run clean && pnpm run build
+# Execute `clean:all` to generate the latest resource image
+RUN pnpm run clean
+
+RUN pnpm run build
 
 FROM nginx:alpine
 
