@@ -1,39 +1,42 @@
+import process from 'node:process';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
-const chunkGroups: Record<string, string[]> = {
-  react: ['react', 'react-dom', 'react-hot-toast'],
-  icons: ['lucide-react'],
-  tailwind: ['tailwindcss', '@tailwindcss'],
-  state: ['zustand', 'immer'],
-  query: ['@tanstack/react-query'],
-  utils: ['clsx', 'tailwind-merge'],
-  crypto: ['file-saver', 'jszip', 'node-forge'],
-  syntax: ['prism-react-renderer', 'react-code-block'],
-};
+// https://vitejs.dev/config/
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '');
 
-export default defineConfig({
-  plugins: [react(), tailwindcss(), tsconfigPaths()],
-  build: {
-    sourcemap: false,
-    target: 'esnext',
-    chunkSizeWarningLimit: 1000,
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (!id.includes('node_modules')) return;
+  const chunkGroups: Record<string, string[]> = {
+    forge: ['node-forge'],
+    icons: ['lucide-react'],
+    react: ['react', 'react-dom', 'zustand', 'immer'],
+    syntax: ['react-code-block', 'prism-react-renderer'],
+  };
 
-          for (const [chunkName, deps] of Object.entries(chunkGroups)) {
-            if (deps.some(dep => id.includes(`/node_modules/${dep}/`))) {
-              return chunkName;
+  return defineConfig({
+    base: env.VITE_SUBPATH_PREFIX || '/',
+    plugins: [react(), tailwindcss(), tsconfigPaths()],
+    build: {
+      target: 'esnext',
+      sourcemap: false,
+      chunkSizeWarningLimit: 1000,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (!id.includes('node_modules')) return;
+
+            for (const [chunkName, deps] of Object.entries(chunkGroups)) {
+              if (deps.some(dep => id.includes(`/node_modules/${dep}/`))) {
+                return chunkName;
+              }
             }
-          }
 
-          return 'vendor';
+            return 'vendor';
+          },
         },
       },
     },
-  },
+  });
 });

@@ -9,7 +9,7 @@ await checkIsPathExist([ideDataPath], async () => {
   await persistDataToFile(JSON.stringify({
     data: await generateIDEData(),
     buildtime: Date.now(),
-  }, null, 2).replaceAll(filterRegexp, ''), ideDataPath);
+  }, null, 2).replaceAll(filterRegexp, ''), ideDataPath, true);
 });
 
 // Try to generate data about plugin products
@@ -17,7 +17,7 @@ await checkIsPathExist([pluginDataPath], async () => {
   await persistDataToFile(JSON.stringify({
     data: await generatePluginData(),
     buildtime: Date.now(),
-  }, null, 2).replaceAll(filterRegexp, ''), pluginDataPath);
+  }, null, 2).replaceAll(filterRegexp, ''), pluginDataPath, true);
 });
 
 // Try to generate data about certificate
@@ -26,8 +26,8 @@ await checkIsPathExist([certificateDataPath], async () => {
   await checkIsPathExist([publicPemPath, privatePemPath], async () => {
     const { publicPem, privatePem } = await generateCertificate();
 
-    await persistDataToFile(publicPem, publicPemPath);
-    await persistDataToFile(privatePem, privatePemPath);
+    await persistDataToFile(publicPem, publicPemPath, true);
+    await persistDataToFile(privatePem, privatePemPath, true);
   });
 
   const rootPem = await readFileData(rootPemPath);
@@ -39,5 +39,5 @@ await checkIsPathExist([certificateDataPath], async () => {
     vmoptions: productVMOptions.trim(),
     publicPem: publicPem.trim(),
     privatePem: privatePem.trim(),
-  }, null, 2).replaceAll(filterRegexp, ''), certificateDataPath);
+  }, null, 2).replaceAll(filterRegexp, ''), certificateDataPath, true);
 });

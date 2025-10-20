@@ -28,3 +28,17 @@ export function isProductMatch(productName: string, searchText: string) {
 
   return searchText === '' ? true : productName.includes(searchText);
 }
+
+export function spliceRequestPath(...paths: string[]): string {
+  const arr = (paths ?? []).filter(p => p != null).map(String);
+  if (arr.length === 0) return '';
+
+  return arr.reduce((prev, next, index) => {
+    if (index === 0) return next.replace(/\/+$/, '');
+
+    const prevPath = prev.replace(/\/+$/, '');
+    const nextPath = next.replace(/^\/+/, '');
+
+    return `${prevPath}/${nextPath}`;
+  }, '').replace(/\/+$/g, '');
+}

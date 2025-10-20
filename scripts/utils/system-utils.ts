@@ -10,6 +10,21 @@ export function resolveFilePath(...paths: string[]) {
   return resolve(...paths);
 }
 
+// Splicing request path
+export function spliceRequestPath(...paths: string[]): string {
+  const arr = (paths ?? []).filter(p => p != null).map(String);
+  if (arr.length === 0) return '';
+
+  return arr.reduce((prev, next, index) => {
+    if (index === 0) return next.replace(/\/+$/, '');
+
+    const prevPath = prev.replace(/\/+$/, '');
+    const nextPath = next.replace(/^\/+/, '');
+
+    return `${prevPath}/${nextPath}`;
+  }, '').replace(/\/+$/g, '');
+}
+
 // Detects whether the file array exists and calls a callback function on failure
 export async function checkIsPathExist(paths: string[], func: () => Promise<void>) {
   const existResults = await Promise.all(
@@ -26,7 +41,7 @@ export async function checkIsPathExist(paths: string[], func: () => Promise<void
   const simplePaths = paths.map((item) => {
     let relativePath = item.replace(rootPath, '').replace(/\\/g, '/');
 
-    if (relativePath.startsWith('/') || relativePath.startsWith('\\')) {
+    if (relativePath.startsWith('/')) {
       relativePath = relativePath.substring(1);
     }
 
@@ -52,11 +67,13 @@ export async function persistDataToFile<T extends
   | NodeJS.ArrayBufferView
   | Iterable<string | NodeJS.ArrayBufferView>
   | AsyncIterable<string | NodeJS.ArrayBufferView>
-  | Stream>(data: T, destination: string) {
+  | Stream>(data: T, destination: string, appendNewLine = false) {
   // The directory where the recursively generated files are located
   await promises.mkdir(resolve(destination, '..'), { recursive: true });
   // Save data to specified destination
   await promises.writeFile(destination, data, 'utf-8');
+  // Appends new blank lines to the end only when configured additionally
+  if (!appendNewLine) return;
   // Ensure the file ends with a newline — only append if the file doesn't already end with LF
   const fileBuffer = await promises.readFile(destination);
   if (fileBuffer.length === 0 || fileBuffer[fileBuffer.length - 1] !== 0x0A) {

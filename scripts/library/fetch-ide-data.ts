@@ -1,7 +1,7 @@
-import { assetsPath, ideProductCodes, publicPath } from '../config/config.js';
+import { assetsPath, ideProductCodes, publicPath, subpathPrefix } from '../config/config.js';
 import { formatProductName, retryFetch, scheduleAsyncTasks } from '../utils/fetch-utils.js';
 import { showInfoText, showProcessText, showSuccessText, showWarnText } from '../utils/prettier-show.js';
-import { persistDataToFile, resolveFilePath } from '../utils/system-utils.js';
+import { persistDataToFile, resolveFilePath, spliceRequestPath } from '../utils/system-utils.js';
 
 // Get the target name by comparing the official name and product name
 function judgeName(name: string, familyName: string) {
@@ -40,6 +40,8 @@ async function fetchIDEData(code: string) {
 
   const ideName = judgeName(fideDataItem.name, fideDataItem.productFamilyName);
   const iconName = formatProductName(ideName);
+  const iconPath = spliceIconPath(iconName);
+  const iconHrefPath = spliceRequestPath(subpathPrefix, iconPath.replace(publicPath, '').replace(/\\/g, '/'));
 
   // Fetch product icon bytes
   const iconBytes = await fetch(
@@ -49,14 +51,14 @@ async function fetchIDEData(code: string) {
   if (iconBytes == null) throw new Error(`failed to fetch ide icon for ${code}`);
 
   // Save the product icon file to the resource directory
-  await persistDataToFile(iconBytes, spliceIconPath(iconName));
+  await persistDataToFile(iconBytes, iconPath);
 
   return {
     type: 'ide',
     code: fideDataItem.salesCode,
     name: ideName,
     link: fideDataItem.link,
-    icon: spliceIconPath(iconName).replace(publicPath, '').replace(/\\/g, '/'),
+    icon: iconHrefPath,
     description: fideDataItem.description,
     tagName: fideDataItem.tags.map(item => item.name),
     releases: ideDataRelease,
