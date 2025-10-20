@@ -21,7 +21,7 @@ export function MenuSearch({ className }: React.ComponentProps<'div'>) {
 
   return (
     <div className={cn(
-      `relative hidden items-center rounded-full border border-border bg-surface transition-all duration-300 focus-within:ring-2 focus-within:ring-accent md:flex`,
+      `relative hidden items-center rounded-full border border-border bg-surface duration-300 focus-within:ring-2 focus-within:ring-accent md:flex`,
       className,
     )}
     >

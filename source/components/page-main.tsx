@@ -44,7 +44,7 @@ export function PageMain() {
   if (response.isError) return <MainError />;
 
   return (
-    <main className='relative grid grid-cols-[repeat(auto-fill,_minmax(min(20rem,_100%),_1fr))] content-center justify-items-center gap-12 bg-background px-8 py-10 text-foreground transition-colors duration-300'>
+    <main className='relative grid grid-cols-[repeat(auto-fill,_minmax(min(20rem,_100%),_1fr))] content-center justify-items-center gap-12 bg-background px-8 py-10 text-foreground'>
       {response.data.ides.map(item => (
         <ProductCard key={item.code} {...item} />
       ))}

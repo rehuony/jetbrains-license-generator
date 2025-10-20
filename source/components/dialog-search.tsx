@@ -55,7 +55,7 @@ export function DialogSearch() {
           <h2 className='text-2xl font-bold tracking-wide text-foreground'>
             Search Production
           </h2>
-          <IconButton className='absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 text-muted transition-colors hover:text-accent' type='submit'>
+          <IconButton className='absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 text-muted transition-all hover:text-accent' type='submit'>
             <X className='pointer-events-none size-4' />
           </IconButton>
         </header>

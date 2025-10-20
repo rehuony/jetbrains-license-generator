@@ -80,7 +80,7 @@ export function DialogTutorial() {
           </li>
         </ol>
         <footer className='flex w-full justify-center'>
-          <button className='w-[min(50%,_24rem)] min-w-fit cursor-pointer rounded-lg bg-accent/80 px-6 py-3 text-sm font-medium text-accent-foreground shadow-md shadow-accent/60 transition-transform duration-150 hover:scale-[1.02] hover:bg-accent active:scale-[0.98]' type='submit'>
+          <button className='w-[min(50%,_24rem)] min-w-fit cursor-pointer rounded-lg bg-accent/80 px-6 py-3 text-sm font-medium text-accent-foreground shadow-md shadow-accent/60 transition-all duration-150 hover:scale-[1.02] hover:bg-accent active:scale-[0.98]' type='submit'>
             Close This Page
           </button>
         </footer>
