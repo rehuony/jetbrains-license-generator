@@ -19,7 +19,7 @@ export function MenuTheme({ className }: React.ComponentProps<'div'>) {
           'p-2',
           theme === 'light'
             ? 'bg-accent text-accent-foreground hover:bg-accent'
-            : `text-foreground hover:bg-accent/50`,
+            : `bg-transparent text-foreground hover:bg-accent/50`,
         )}
       >
         <Sun className='size-4' />
@@ -30,7 +30,7 @@ export function MenuTheme({ className }: React.ComponentProps<'div'>) {
           'p-2',
           theme === 'system'
             ? 'bg-accent text-accent-foreground hover:bg-accent'
-            : `text-foreground hover:bg-accent/50`,
+            : `bg-transparent text-foreground hover:bg-accent/50`,
         )}
       >
         <Monitor className='size-4' />
@@ -41,7 +41,7 @@ export function MenuTheme({ className }: React.ComponentProps<'div'>) {
           'p-2',
           theme === 'dark'
             ? 'bg-accent text-accent-foreground hover:bg-accent'
-            : `text-foreground hover:bg-accent/50`,
+            : `bg-transparent text-foreground hover:bg-accent/50`,
         )}
       >
         <Moon className='size-4' />
