@@ -11,7 +11,6 @@ export default defineConfig(({ mode }) => {
   const chunkGroups: Record<string, string[]> = {
     forge: ['node-forge'],
     icons: ['lucide-react'],
-    react: ['react', 'react-dom', 'zustand', 'immer'],
     syntax: ['react-code-block', 'prism-react-renderer'],
   };
 
