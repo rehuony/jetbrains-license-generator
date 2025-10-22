@@ -1,6 +1,7 @@
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
 import { resource } from '@/constants/resource';
+import { adaptivePath } from '@/utils/utils';
 
 function getCpuCoreCount() {
   if (typeof navigator !== 'undefined' && navigator.hardwareConcurrency) {
@@ -44,7 +45,7 @@ export async function downloadJaNetfilter() {
 
   const allTasks = resource.map(item => async () => {
     try {
-      const data = await fetch(`/${item}`).then(res => res.blob());
+      const data = await fetch(adaptivePath(`/${item}`)).then(res => res.blob());
       zip.file(item.replace('ja-netfilter/', ''), data);
     } catch (error) {
       if (error instanceof Error) console.warn(error.message);

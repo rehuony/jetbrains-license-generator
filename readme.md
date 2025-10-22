@@ -2,19 +2,20 @@
 
 > [!Caution]
 >
-> **Disclaimer:**  This project is for **educational and security research purposes only**.  Please respect JetBrains’ licensing terms and purchase valid licenses for commercial or personal use.
+> **Disclaimer:** This project is for **educational and security research purposes only**.
+> Please respect JetBrains’ licensing terms and purchase valid licenses for commercial or personal use.
 
 ## 📘 Overview
 
-This project is an **educational and research tool** designed to demonstrate how JetBrains software license validation mechanisms work.  It helps developers understand the process of license file generation, cryptographic signing, and validation logic — **not for production or piracy use**.
+This project is an **educational and research tool** designed to demonstrate how JetBrains software license validation mechanisms work. It helps developers understand the process of license file generation, cryptographic signing, and validation logic — **not for production or piracy use**.
 
 ## ⚙️ Tech Stack
 
-| Category | Technology |
-|-----------|-------------|
-| 🧱 Build Tool | [Vite](https://vitejs.dev/) |
-| ⚛️ Framework | [React](https://react.dev/) |
-| 📝 Language | [TypeScript](https://www.typescriptlang.org/) |
+| Category      | Technology                                    |
+| ------------- | --------------------------------------------- |
+| 🧱 Build Tool | [Vite](https://vitejs.dev/)                   |
+| ⚛️ Framework  | [React](https://react.dev/)                   |
+| 📝 Language   | [TypeScript](https://www.typescriptlang.org/) |
 
 ## 🚀 Installation & Build
 
@@ -133,9 +134,9 @@ location ^~ /jetbrains-license-generator/ {
 
 💡 **Tips:**
 
--   Make sure your application is listening on port `8080` (or the port you configured in Docker).
+- Make sure your application is listening on port `8080` (or the port you configured in Docker).
 
--   If you’re using Docker, map the container port accordingly, e.g.:
+- If you’re using Docker, map the container port accordingly, e.g.:
 
 ```bash
 docker run -d -p 8080:80 jetbrains-license-generator

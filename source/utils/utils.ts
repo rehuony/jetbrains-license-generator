@@ -29,16 +29,17 @@ export function isProductMatch(productName: string, searchText: string) {
   return searchText === '' ? true : productName.includes(searchText);
 }
 
-export function spliceRequestPath(...paths: string[]): string {
+export function adaptivePath(...paths: string[]): string {
   const arr = (paths ?? []).filter(p => p != null).map(String);
   if (arr.length === 0) return '';
 
-  return arr.reduce((prev, next, index) => {
-    if (index === 0) return next.replace(/\/+$/, '');
+  // Parse request subpath prefix
+  const domainPrefix = import.meta.env?.VITE_SUBPATH_PREFIX || '/';
 
+  return arr.reduce((prev, next) => {
     const prevPath = prev.replace(/\/+$/, '');
     const nextPath = next.replace(/^\/+/, '');
 
     return `${prevPath}/${nextPath}`;
-  }, '').replace(/\/+$/g, '');
+  }, domainPrefix).replace(/\/+$/, '');
 }

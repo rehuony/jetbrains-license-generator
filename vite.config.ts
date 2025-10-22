@@ -1,3 +1,4 @@
+import path from 'node:path';
 import process from 'node:process';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
@@ -14,7 +15,7 @@ export default defineConfig(({ mode }) => {
     syntax: ['react-code-block', 'prism-react-renderer'],
   };
 
-  return defineConfig({
+  return {
     base: env.VITE_SUBPATH_PREFIX || '/',
     plugins: [react(), tailwindcss(), tsconfigPaths()],
     build: {
@@ -27,7 +28,7 @@ export default defineConfig(({ mode }) => {
             if (!id.includes('node_modules')) return;
 
             for (const [chunkName, deps] of Object.entries(chunkGroups)) {
-              if (deps.some(dep => id.includes(`/node_modules/${dep}/`))) {
+              if (deps.some(dep => id.includes(`node_modules${path.sep}${dep}${path.sep}`))) {
                 return chunkName;
               }
             }
@@ -37,5 +38,5 @@ export default defineConfig(({ mode }) => {
         },
       },
     },
-  });
+  };
 });

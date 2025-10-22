@@ -3,10 +3,7 @@ import { MainError } from '@/components/main-error';
 import { MainPending } from '@/components/main-pending';
 import { ProductCard } from '@/components/product-card';
 import { useCertificateStorage } from '@/hooks/use-storage';
-import { spliceRequestPath } from '@/utils/utils';
-
-// Parse request subpath prefix
-const domainPrefix = spliceRequestPath(import.meta.env.VITE_SUBPATH_PREFIX || '/');
+import { adaptivePath } from '@/utils/utils';
 
 export function PageMain() {
   const setConf = useCertificateStorage(state => state.setConf);
@@ -17,11 +14,19 @@ export function PageMain() {
   const response = useQuery({
     queryKey: ['ide-data', 'plugin-data', 'certificate-data'],
     queryFn: async () => {
-      const ideData = await fetch(`${domainPrefix}/generated/ide-data.json`).then(res => res.ok ? res.json() as unknown as IDEDataJSON : null);
+      const ideData = await fetch(
+        adaptivePath(`/generated/ide-data.json`),
+      ).then(res => res.ok ? res.json() as unknown as IDEDataJSON : null);
       if (ideData === null) throw new Error('failed to fetch ide-data.json');
-      const pluginData = await fetch(`${domainPrefix}/generated/plugin-data.json`).then(res => res.ok ? res.json() as unknown as PluginDataJSON : null);
+
+      const pluginData = await fetch(
+        adaptivePath(`/generated/plugin-data.json`),
+      ).then(res => res.ok ? res.json() as unknown as PluginDataJSON : null);
       if (pluginData === null) throw new Error('failed to fetch plugin-data.json');
-      const certificateData = await fetch(`${domainPrefix}/generated/certificate-data.json`).then(res => res.ok ? res.json() as unknown as CertificateDataJSON : null);
+
+      const certificateData = await fetch(
+        adaptivePath(`/generated/certificate-data.json`),
+      ).then(res => res.ok ? res.json() as unknown as CertificateDataJSON : null);
       if (certificateData === null) throw new Error('failed to fetch certificate-data.json');
 
       setConf(certificateData.conf);

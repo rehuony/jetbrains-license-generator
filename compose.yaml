@@ -7,4 +7,4 @@ services:
     container_name: jetbrains-license-generator
     restart: unless-stopped
     ports:
-      - "80:80"
+      - '8080:80'

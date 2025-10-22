@@ -7,6 +7,7 @@ export default antfu(
     typescript: true,
     formatters: true,
     stylistic: { indent: 2, quotes: 'single', semi: true },
+    ignores: ['**/*.md'],
   },
   {
     plugins: {

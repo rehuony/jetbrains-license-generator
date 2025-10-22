@@ -8,7 +8,6 @@
   "scripts": {
     "dev": "vite",
     "clean": "rimraf build dist",
-    "clean:all": "rimraf build dist public/generated",
     "build": "vite build",
     "prebuild": "tsc -p tsconfig.node.json && node build",
     "preview": "vite preview",
