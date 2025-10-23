@@ -2,27 +2,12 @@ import type Stream from 'node:stream';
 
 import { promises } from 'node:fs';
 import { resolve } from 'node:path';
-import { rootPath } from '../config/config.js';
+import { isRegenerate, rootPath } from '../config/config.js';
 import { showInfoText } from './prettier-show.js';
 
 // Externally exposed path parsing function
 export function resolveFilePath(...paths: string[]) {
   return resolve(...paths);
-}
-
-// Splicing request path
-export function spliceRequestPath(...paths: string[]): string {
-  const arr = (paths ?? []).filter(p => p != null).map(String);
-  if (arr.length === 0) return '';
-
-  return arr.reduce((prev, next, index) => {
-    if (index === 0) return next.replace(/\/+$/, '');
-
-    const prevPath = prev.replace(/\/+$/, '');
-    const nextPath = next.replace(/^\/+/, '');
-
-    return `${prevPath}/${nextPath}`;
-  }, '').replace(/\/+$/g, '');
 }
 
 // Detects whether the file array exists and calls a callback function on failure
@@ -41,12 +26,17 @@ export async function checkIsPathExist(paths: string[], func: () => Promise<void
   const simplePaths = paths.map((item) => {
     let relativePath = item.replace(rootPath, '').replace(/\\/g, '/');
 
-    if (relativePath.startsWith('/')) {
+    while (relativePath.startsWith('/')) {
       relativePath = relativePath.substring(1);
     }
 
     return `${relativePath}`;
   });
+
+  if (isRegenerate) {
+    showInfoText(`force regenerating ${simplePaths.join(', ')}...`);
+    return await func();
+  }
 
   if (!isExist) {
     showInfoText(`${simplePaths.join(', ')} not exist, regenerating...`);

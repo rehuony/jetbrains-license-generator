@@ -1,7 +1,7 @@
-import { assetsPath, ideProductCodes, publicPath, subpathPrefix } from '../config/config.js';
+import { assetsPath, ideProductCodes, publicPath } from '../config/config.js';
 import { formatProductName, retryFetch, scheduleAsyncTasks } from '../utils/fetch-utils.js';
 import { showInfoText, showProcessText, showSuccessText, showWarnText } from '../utils/prettier-show.js';
-import { persistDataToFile, resolveFilePath, spliceRequestPath } from '../utils/system-utils.js';
+import { persistDataToFile, resolveFilePath } from '../utils/system-utils.js';
 
 // Get the target name by comparing the official name and product name
 function judgeName(name: string, familyName: string) {
@@ -41,7 +41,7 @@ async function fetchIDEData(code: string) {
   const ideName = judgeName(fideDataItem.name, fideDataItem.productFamilyName);
   const iconName = formatProductName(ideName);
   const iconPath = spliceIconPath(iconName);
-  const iconHrefPath = spliceRequestPath(subpathPrefix, iconPath.replace(publicPath, '').replace(/\\/g, '/'));
+  const iconHrefPath = iconPath.replace(publicPath, '').replace(/\\/g, '/');
 
   // Fetch product icon bytes
   const iconBytes = await fetch(

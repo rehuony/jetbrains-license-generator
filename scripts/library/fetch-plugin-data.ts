@@ -1,7 +1,7 @@
-import { assetsPath, publicPath, subpathPrefix } from '../config/config.js';
+import { assetsPath, publicPath } from '../config/config.js';
 import { formatProductName, retryFetch, scheduleAsyncTasks } from '../utils/fetch-utils.js';
 import { showInfoText, showProcessText, showSuccessText, showWarnText } from '../utils/prettier-show.js';
-import { persistDataToFile, resolveFilePath, spliceRequestPath } from '../utils/system-utils.js';
+import { persistDataToFile, resolveFilePath } from '../utils/system-utils.js';
 
 // Get the number of all plugins
 async function fetchPluginNumber() {
@@ -90,13 +90,12 @@ async function fetchPluginData(id: number) {
   const pluginCode = response.purchaseInfo?.productCode ?? `${response.id}`;
   const iconName = formatProductName(pluginCode);
   const iconPath = spliceIconPath(iconName);
-  const iconHrefPath = spliceRequestPath(subpathPrefix, iconPath.replace(publicPath, '').replace(/\\/g, '/'));
+  const iconHrefPath = iconPath.replace(publicPath, '').replace(/\\/g, '/');
 
   // Fetch product icon bytes
-  const iconData = await fetch(spliceRequestPath(
-    'https://plugins.jetbrains.com',
-    response.icon ?? '/static/versions/31888/jetbrains-simple.svg',
-  )).then(res => res.ok ? res.bytes() : null);
+  const iconData = await fetch(`https://plugins.jetbrains.com/${
+    (response.icon ?? '/static/versions/31888/jetbrains-simple.svg').replace(/^\/+/, '')
+  }`).then(res => res.ok ? res.bytes() : null);
   if (iconData == null) throw new Error(`failed to fetch plugin icon for ${id}...`);
 
   // Save the product icon file to the resource directory
@@ -107,7 +106,7 @@ async function fetchPluginData(id: number) {
     id: response.id,
     code: pluginCode,
     name: response.name,
-    link: spliceRequestPath('https://plugins.jetbrains.com', response.link),
+    link: `https://plugins.jetbrains.com/${response.link.replace(/^\/+/, '')}`,
     icon: iconHrefPath,
     description: response.description,
     tagName: response.tags?.map(item => item.name) ?? [],

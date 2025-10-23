@@ -7,10 +7,10 @@
   "description": "Online website for generating jetbrains product licenses",
   "scripts": {
     "dev": "vite",
-    "clean": "rimraf build dist",
     "build": "vite build",
-    "prebuild": "tsc -p tsconfig.node.json && node build",
+    "clean": "rimraf build dist",
     "preview": "vite preview",
+    "prebuild": "tsc -p tsconfig.node.json && node build",
     "lint": "eslint .",
     "lint:fix": "eslint --fix ."
   },

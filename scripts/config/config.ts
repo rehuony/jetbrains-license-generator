@@ -2,7 +2,6 @@ import { availableParallelism } from 'node:os';
 import { resolve } from 'node:path';
 import process from 'node:process';
 import dotenv from 'dotenv';
-import { spliceRequestPath } from '../utils/system-utils.js';
 
 // Define regular expressions for filtering strings
 export const filterRegexp = /[\u2003\u200B]/g;
@@ -35,4 +34,4 @@ export const productVMOptions = `
 
 // Load environment variables
 dotenv.config({ path: resolve(rootPath, '.env'), quiet: true });
-export const subpathPrefix = spliceRequestPath(process.env.VITE_SUBPATH_PREFIX || '/');
+export const isRegenerate = process.env.REGENERATE_FLAG === 'true';
