@@ -7,9 +7,9 @@ import { convertPemToString, generateLicenseId } from '@/utils/license';
 import { adaptivePath, cn, isProductMatch } from '@/utils/utils';
 
 export function ProductCard(props: IDEDataItem | PluginDataItem) {
+  const imgRef = useRef<HTMLImageElement>(null);
   const [isCopied, setIsCopied] = useState<boolean | null>(null);
 
-  const imgRef = useRef<HTMLImageElement>(null);
   const text = useLocalStorage(state => state.text);
   const email = useLicenseStorage(state => state.email);
   const username = useLicenseStorage(state => state.username);
@@ -70,22 +70,30 @@ export function ProductCard(props: IDEDataItem | PluginDataItem) {
     }, 3000);
   }, [email, expiryDate, privatePem, props.code, props.name, publicPem, username]);
 
+  const iconUrl = adaptivePath(props.icon);
+  const placeholder = adaptivePath('/pagelogo.svg');
+
   useEffect(() => {
-    const realImg = new Image();
-    realImg.src = adaptivePath(props.icon);
-    realImg.onload = () => {
-      if (imgRef.current) {
-        imgRef.current.src = adaptivePath(props.icon);
-        imgRef.current.classList.add('loaded');
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry && entry.isIntersecting) {
+        const realImg = new Image();
+        realImg.src = iconUrl;
+        realImg.onload = () => {
+          if (imgRef.current) imgRef.current.src = iconUrl;
+        };
+        observer.disconnect();
       }
-    };
-  }, [props.icon]);
+    });
+
+    if (imgRef.current) observer.observe(imgRef.current);
+    return () => observer.disconnect();
+  }, [iconUrl]);
 
   return (
     <article className={cn(`w-full rounded-xl bg-surface text-foreground shadow-xl ring-1 ring-border select-none hover:-translate-y-[2px] hover:ring-accent/40 md:w-5/6`, isProductMatch(props.name, text) ? '' : `hidden`)}>
       <header className='flex items-center justify-between border-b border-border px-4 pb-1'>
         <span className='size-16 translate-y-1/2'>
-          <img ref={imgRef} alt={`${props.name}'s logo`} className='pointer-events-none size-full' loading='lazy' src={adaptivePath('/pagelogo.svg')} />
+          <img ref={imgRef} alt={`${props.name}'s logo`} className='pointer-events-none size-full' loading='lazy' src={placeholder} />
         </span>
         <span className='cursor-pointer rounded-full border border-border text-sm text-muted hover:border-accent hover:text-accent'>
           <a className='block px-8 py-2' href={props.link} rel='noopener noreferrer' target='_blank'>
